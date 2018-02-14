@@ -32,9 +32,7 @@ Please feel free to use a different markup language if you do not plan to run
 
 - Peter Rasmussen 
 - Mitchell Kohrs
-- David Kurschner
 - Matthew Sargeant : msargeant@student.cvtc.edu
-- Mitchell Kohrs
 - David Kurschner
 - Collin Scobie
 - Cody Bennett
