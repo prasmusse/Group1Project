@@ -1,4 +1,4 @@
-class LeaderboardController < ApplicationController
-  def index
+class LeaderboardController < ApplicationController 
+ def index
   end
 end

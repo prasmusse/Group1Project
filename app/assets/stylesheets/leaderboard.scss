@@ -1,3 +1,28 @@
 // Place all the styles related to the leaderboard controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+Table{
+    margin: 0 auto;
+    border: 1px solid;
+    border-collapse: collapse;
+    width:90%;
+    font-size:1.5rem;
+}
+
+#tblHead {
+    border-bottom: 1px solid;
+}
+
+tr:nth-child(odd){
+    background-color:#f2f2f2;
+}
+
+th, td{
+    padding: 0.5rem 2rem;
+    text-align:center
+}
+
+td:nth-child(even), th:nth-child(even){
+    text-align:right;
+}
