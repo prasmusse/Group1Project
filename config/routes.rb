@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/game', controller: 'game', action: 'index', as: 'game'
+
   get '/leaderboard', controller: 'leaderboard', action: 'index', as: 'leaderboard'
 
   get 'auth/:provider/callback', to: 'sessions#create'
