@@ -8,25 +8,27 @@
 </head>
 <body>
 
-  <div>
-        <% if current_user %>
-          Signed in as <strong><%= current_user.name %></strong>!
-          <%= link_to "Sign out", signout_path, id: "game#index" %>
-        <% else %>
-          <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
+  <div id="userstatus">
 
-        <% end %>
       </div>
-      <div class="container">
+      <div id="gametitle">
         <header>
           <h1>"Not" Asteroids</h1>
         </header>
+        <% if !current_user %>
+          <%= link_to image_tag("sign-in-with-google.png", :border=>0, :class => 'googleimage', :size => "164x36"), "/auth/google_oauth2", id: "sign_in" %>
+        <% end %>
 
         <% if current_user %>
-          <nav>
+          <nav id="mainnav">
             <%=link_to_unless_current 'Home', game_url %>
             <%=link_to_unless_current 'LeaderBoard', leaderboard_url %>
+            <div id="signout">
+              Welcome, <%= current_user.name %>! &nbsp;<%= link_to "Sign out", signout_path, id: "game#index" %>
+            </div>
           </nav>
+
+
       <% end %>
       <div>
       <%= yield %>
