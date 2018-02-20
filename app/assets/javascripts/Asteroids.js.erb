@@ -1,26 +1,26 @@
-//= require phaser
+
 (function($){
     var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gamecontainer', { preload: preload, create: create, update: update });
     var spaceship;
     var bullets;
     var fireButton;
     var bulletTime = 0;
-    
+
     function preload() {
-        game.load.image('spaceship', '../spaceship.png');
-        game.load.image('bullet', '../torpedo2.png');
+        game.load.image('spaceship', '<%= image_path('spaceship.png') %>');
+        game.load.image('bullet', '<%= image_path('torpedo2.png') %>');
     }
 
     function create() {
         //spaceship.scale.setTo(2,2);
-        spaceship = game.add.sprite(0, 0, 'spaceship');
+        spaceship = game.add.sprite(10, 0, 'spaceship');
         //  We need to enable physics on the player
         game.physics.arcade.enable(spaceship);
-        
+
         //  Our two animations, walking left and right.
         spaceship.animations.add('left', [0, 1, 2, 3], 10, true);
         spaceship.animations.add('right', [5, 6, 7, 8], 10, true);
-        
+
         //  Our bullet group
         bullets = game.add.group();
         bullets.enableBody = true;
@@ -30,7 +30,7 @@
         bullets.setAll('anchor.y', 1);
         bullets.setAll('outOfBoundsKill', true);
         bullets.setAll('checkWorldBounds', true);
-        
+
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     }
 
@@ -60,13 +60,13 @@
 
             spaceship.frame = 4;
         }
-        
+
         //  Firing?
         if (fireButton.isDown)
         {
             fireBullet();
         }
-        
+
         function fireBullet () {
 
             //  To avoid them being allowed to fire too fast we set a time limit
