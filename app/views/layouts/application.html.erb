@@ -18,6 +18,7 @@
         <% if !current_user %>
           <%= link_to image_tag("sign-in-with-google.png", :border=>0, :class => 'googleimage', :size => "164x36"), "/auth/google_oauth2", id: "sign_in" %>
         <% end %>
+          
 
         <% if current_user %>
           <nav id="mainnav">

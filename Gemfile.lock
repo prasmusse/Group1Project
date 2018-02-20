@@ -103,6 +103,8 @@ GEM
     omniauth-oauth2 (1.3.1)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
+    phaser-rails (2.6.2.0)
+      railties (>= 4.0)
     public_suffix (3.0.2)
     rack (1.6.8)
     rack-test (0.6.3)
@@ -185,6 +187,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   omniauth-google-oauth2 (~> 0.2.1)
+  phaser-rails
   rails (= 4.2.6)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
