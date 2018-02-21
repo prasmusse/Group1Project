@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  scoreID: 1
+  userID: 1
+  score: 1
+  score_level_reached: 1
+  time: 2018-02-21 16:36:24
+
+two:
+  scoreID: 1
+  userID: 1
+  score: 1
+  score_level_reached: 1
+  time: 2018-02-21 16:36:24
