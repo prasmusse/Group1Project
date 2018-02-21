@@ -1,6 +1,6 @@
 
 (function($){
-    var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gamecontainer', { preload: preload, create: create, update: update });
+    var game = new Phaser.Game(960, 600, Phaser.AUTO, 'gamecontainer', { preload: preload, create: create, update: update });
     var spaceship;
     var bullets;
     var fireButton;
@@ -13,7 +13,7 @@
 
     function create() {
         //spaceship.scale.setTo(2,2);
-        spaceship = game.add.sprite(10, 0, 'spaceship');
+        spaceship = game.add.sprite(game.world.width/2, game.world.height - 200, 'spaceship');
         //  We need to enable physics on the player
         game.physics.arcade.enable(spaceship);
 
@@ -78,7 +78,7 @@
                 if (bullet)
                 {
                     //  And fire it
-                    bullet.reset(spaceship.x, spaceship.y + 8);
+                    bullet.reset(spaceship.x + 30, spaceship.y + 8);
                     bullet.body.velocity.y = -400;
                     bulletTime = game.time.now + 200;
                 }
