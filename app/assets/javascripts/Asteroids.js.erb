@@ -6,6 +6,8 @@
     var bullets;
     var fireButton;
     var bulletTime = 0;
+    var asteroidXPath;
+    var asteroidYPath;
 
     function preload() {
         game.load.image('spaceship', '<%= image_path('spaceship.png') %>');
@@ -35,6 +37,10 @@
         
         // Asteroids
         asteroid = game.add.sprite(50,50, 'asteroid');
+        game.physics.arcade.enable(asteroid);
+        asteroidXPath = spaceship.world.x;
+        asteroidYPath = spaceship.world.y;
+        
         
 
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -98,6 +104,11 @@
             bullet.kill();
 
         }
+        
+        
+        
+        
+        game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath + 150, 100);
         
         
     }
