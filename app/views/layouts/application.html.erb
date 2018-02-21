@@ -7,36 +7,35 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-  <div id="userstatus">
-
-      </div>
-      <div id="gametitle">
+    <div id="gametitle">
         <header>
-          <h1>"Not" Asteroids</h1>
+            <h1>"Not" Asteroids</h1>
         </header>
         <% if !current_user %>
-          <%= link_to image_tag("sign-in-with-google.png", :border=>0, :class => 'googleimage', :size => "164x36"), "/auth/google_oauth2", id: "sign_in" %>
-        <% end %>
-          
+            <%= link_to image_tag("sign-in-with-google.png", :border=>0, :class => 'googleimage', :size => "164x36"), "/auth/google_oauth2", id: "sign_in" %>
+        <% end %>  
 
         <% if current_user %>
-          <nav id="mainnav">
-            <%=link_to_unless_current 'Home', game_url %>
-            <%=link_to_unless_current 'LeaderBoard', leaderboard_url %>
+            <nav id="mainnav">
+                <ul>
+                    <li>
+                        <%=link_to_unless_current 'Home', game_url %>
+                    </li>
+                    <li>
+                        <%=link_to_unless_current 'LeaderBoard', leaderboard_url %>
+                    </li>
+                </ul>
+            </nav>
             <div id="signout">
-              Welcome, <%= current_user.name %>! &nbsp;<%= link_to "Sign out", signout_path, id: "game#index" %>
+                <p>Welcome, <%= current_user.name %>! &nbsp;<%= link_to "Sign out", signout_path, id: "game#index" %></p>
             </div>
-          </nav>
-
-
-      <% end %>
-      <div>
+          <% end %>
+    <div>
       <%= yield %>
-      </div>
-
-
-
-
+    </div>
+    
+    <footer>
+        <small>&copy; 2018 GroupOne. All rights reserved.</small>
+    </footer>
 </body>
 </html>

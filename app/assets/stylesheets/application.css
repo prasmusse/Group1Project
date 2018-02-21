@@ -13,3 +13,75 @@
  *= require_tree .
  *= require_self
  */
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0 none;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	outline-style: none;
+}
+
+body{
+    background-color: #000;
+    color: #fff;
+}
+
+#gametitle{
+    background-color: rgba(75,75,75,.6);
+    width:90%;
+    margin: 0 auto;
+    padding: .5rem 0;
+}
+
+nav {
+    margin: 0 auto;
+    width: 90%;
+    font-weight: 700;
+    text-transform: uppercase;
+    bottom: 4rem;
+    display: block;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+nav li {
+    padding: 0;
+    margin: 0;
+    background-color: #333;
+    border-left: solid black .1rem;
+    border-right: solid black .1rem;
+    background-image: -webkit-gradient(linear, 0 0, 0 90%, from(#000), to(transparent));
+    float: left;
+    font-size: 85%;
+}
+
+nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav li a:hover:not(.active) {
+    background-image: -webkit-gradient(linear, 0 0, 0 90%, from(#000), to(transparent));
+    background-color: #111;
+}
+
+#signout{
+    clear:both;
+    text-align:right;
+    margin:1rem;
+}
+
+header{
+    
+}

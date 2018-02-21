@@ -1,0 +1,15 @@
+current directory: /projects/Group1Project/vendor/cache/ruby/2.3.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+/usr/local/bin/ruby -r ./siteconf20180221-1347-xh0tnk.rb extconf.rb
+creating Makefile
+
+current directory: /projects/Group1Project/vendor/cache/ruby/2.3.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR=" clean
+
+current directory: /projects/Group1Project/vendor/cache/ruby/2.3.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR="
+compiling debug_inspector.c
+linking shared-object debug_inspector.so
+
+current directory: /projects/Group1Project/vendor/cache/ruby/2.3.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 debug_inspector.so ./.gem.20180221-1347-1uel15z
