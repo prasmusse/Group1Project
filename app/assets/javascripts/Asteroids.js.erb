@@ -5,6 +5,8 @@
     var asteroid;
     var bullet;
     var bullets;
+    var explosions;
+    var explode;
     var fireButton;
     var bulletTime = 0;
     var asteroidXPath;
@@ -14,7 +16,7 @@
         game.load.image('spaceship', '<%= image_path('spaceship.png') %>');
         game.load.image('bullet', '<%= image_path('torpedo2.png') %>');
         game.load.image('asteroid', '<%= image_path('asteroids_demo.png') %>');
-        game.load.spritesheet('asteroidExplosion', '<%= image_path('explosion_sprite_sheet.png') %>');
+        game.load.spritesheet('asteroidExplosion', '<%= image_path('explosion_sprite_sheet.png') %>', 128, 128);
     }
 
     function create() {
@@ -40,6 +42,7 @@
         // Asteroids
         // Add asteroid to the game
         asteroid = game.add.sprite(50,50, 'asteroid');
+        asteroid.animations.add('explode');
         
         // Enable physics on the asteroid
         game.physics.arcade.enable(asteroid);
@@ -48,8 +51,15 @@
         asteroidXPath = spaceship.world.x;
         asteroidYPath = spaceship.world.y;
         
+        
+        //explosions.createMultiple(30, 'asteroidExplosion');
+        //explosions.forEach(setupAsteroid, this);
+        
+        
         // Setup spacebar as fire button
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        
+        
     }
 
     function update() {
@@ -58,8 +68,8 @@
         game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath + 150, 100);
         
         // Setup collisions
-        game.physics.arcade.collide(asteroid, bullet, bulletHitAsteroid);
-        game.physics.arcade.collide(asteroid, spaceship, asteroidHitSpaceship);
+        game.physics.arcade.overlap(asteroid, bullet, bulletHitAsteroid, null, this);
+        game.physics.arcade.overlap(asteroid, spaceship, asteroidHitSpaceship, null, this);
         
         
         var cursors = game.input.keyboard.createCursorKeys();
@@ -127,6 +137,12 @@
             
             // kill bullet
             bullet.kill();
+            
+            
+            // Explosions
+            explosions = game.add.sprite(asteroid.x - (asteroid.width / 2), asteroid.y - (asteroid.height /  2), 'asteroidExplosion', 5);
+            explode = explosions.animations.add('explode')
+            explosions.animations.play('explode', false);
         }
         
         function asteroidHitSpaceship() {
