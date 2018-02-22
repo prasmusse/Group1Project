@@ -28,7 +28,7 @@
                 </ul>
             </nav>
             <div id="signout">
-                <p>Welcome, <%= current_user.name %>! &nbsp;<%= link_to "Sign out", signout_path, id: "game#index" %></p>
+                <p>Welcome, <%= current_user.name %>!<span><%= link_to "Sign out", signout_path, id: "game#index" %></span></p>
             </div>
           <% end %>
         <div id=wrapper>

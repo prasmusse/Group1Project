@@ -26,10 +26,14 @@
 
 body{
     position: ;
-    background-color: #000;
+    /*background-color: #000;*/
+    background: url(tenor.gif);
+    background-repeat: no-repeat;
+    background-size: cover;
     color: #fff;
     font-family: 'Audiowide';
     min-height: 15.5rem;
+    text-align: center;
 }
 
 #gametitle{
@@ -93,6 +97,26 @@ nav li a:hover:not(.active) {
     top:0;
     right:2rem;
     font-size: 0.8rem;
+}
+
+#signout span{
+    margin-left: .5rem;
+    padding: 0;
+    background-color: #888;
+    border: 1px solid #222;
+    width:25%;
+    text-align: center;
+}
+
+#signout span a{
+    color: white;
+    text-align: center;
+    padding: 0 6px;
+    text-decoration: none;
+}
+
+#signout span a:hover:not(.active) {
+    background-color: #111;
 }
 
 #wrapper p{
