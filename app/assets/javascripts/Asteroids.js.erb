@@ -3,6 +3,7 @@
     var game = new Phaser.Game(960, 600, Phaser.AUTO, 'gamecontainer', { preload: preload, create: create, update: update });
     var spaceship;
     var asteroid;
+    var bullet;
     var bullets;
     var fireButton;
     var bulletTime = 0;
@@ -13,15 +14,16 @@
         game.load.image('spaceship', '<%= image_path('spaceship.png') %>');
         game.load.image('bullet', '<%= image_path('torpedo2.png') %>');
         game.load.image('asteroid', '<%= image_path('asteroids_demo.png') %>');
+        game.load.spritesheet('asteroidExplosion', '<%= image_path('explosion_sprite_sheet.png') %>');
     }
 
     function create() {
-        //spaceship.scale.setTo(2,2);
+        // Add spaceship to the game
         spaceship = game.add.sprite(game.world.width/2, game.world.height - 100, 'spaceship');
-        //  We need to enable physics on the player
+        //  Enable physics on the spaceship
         game.physics.arcade.enable(spaceship);
 
-        //  Our two animations, walking left and right.
+        //  move the ship left and right
         spaceship.animations.add('left', [0, 1, 2, 3], 10, true);
         spaceship.animations.add('right', [5, 6, 7, 8], 10, true);
 
@@ -36,17 +38,30 @@
         bullets.setAll('checkWorldBounds', true);
         
         // Asteroids
+        // Add asteroid to the game
         asteroid = game.add.sprite(50,50, 'asteroid');
+        
+        // Enable physics on the asteroid
         game.physics.arcade.enable(asteroid);
+        
+        // Set the path of the asteroid
         asteroidXPath = spaceship.world.x;
         asteroidYPath = spaceship.world.y;
         
-        
-
+        // Setup spacebar as fire button
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     }
 
     function update() {
+        
+        // Get asteroids moving
+        game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath + 150, 100);
+        
+        // Setup collisions
+        game.physics.arcade.collide(asteroid, bullet, bulletHitAsteroid);
+        game.physics.arcade.collide(asteroid, spaceship, asteroidHitSpaceship);
+        
+        
         var cursors = game.input.keyboard.createCursorKeys();
         //  Reset the players velocity (movement)
         spaceship.body.velocity.x = 0;
@@ -105,10 +120,27 @@
 
         }
         
+        function bulletHitAsteroid() {
+            
+            // kill asteroid
+            asteroid.kill();
+            
+            // kill bullet
+            bullet.kill();
+        }
+        
+        function asteroidHitSpaceship() {
+            
+            // kill asteroid
+            asteroid.kill();
+            
+            // kill spaceship
+            spaceship.kill();
+        }
         
         
         
-        game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath + 150, 100);
+        
         
         
     }
