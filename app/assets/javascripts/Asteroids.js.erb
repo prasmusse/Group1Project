@@ -2,7 +2,6 @@
 (function($){
     var game = new Phaser.Game(960, 600, Phaser.AUTO, 'gamecontainer', { preload: preload, create: create, update: update });
     var spaceship;
-    var asteroid;
     var bullets;
     var fireButton;
     var bulletTime = 0;
@@ -10,12 +9,11 @@
     function preload() {
         game.load.image('spaceship', '<%= image_path('spaceship.png') %>');
         game.load.image('bullet', '<%= image_path('torpedo2.png') %>');
-        game.load.image('asteroid', '<%= image_path('asteroids_demo.png') %>');
     }
 
     function create() {
         //spaceship.scale.setTo(2,2);
-        spaceship = game.add.sprite(game.world.width/2, game.world.height - 100, 'spaceship');
+        spaceship = game.add.sprite(game.world.width/2, game.world.height - 200, 'spaceship');
         //  We need to enable physics on the player
         game.physics.arcade.enable(spaceship);
 
@@ -32,10 +30,6 @@
         bullets.setAll('anchor.y', 1);
         bullets.setAll('outOfBoundsKill', true);
         bullets.setAll('checkWorldBounds', true);
-        
-        // Asteroids
-        asteroid = game.add.sprite(50,50, 'asteroid');
-        
 
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     }
@@ -98,7 +92,5 @@
             bullet.kill();
 
         }
-        
-        
     }
 })(jQuery);

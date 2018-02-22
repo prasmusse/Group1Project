@@ -13,3 +13,99 @@
  *= require_tree .
  *= require_self
  */
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0 none;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	outline-style: none;
+}
+
+body{
+    position: ;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Audiowide';
+    min-height: 15.5rem;
+}
+
+#gametitle{
+    background-color: rgba(75,75,75,.6);
+    width:90%;
+    margin: 0 auto;
+    padding: .5rem 0;
+}
+
+header{
+    margin-top:1rem; 
+    font-size: 1.8rem;
+}
+
+nav {
+    margin: 0 auto;
+    width: 80%;
+    font-weight: 700;
+    text-transform: uppercase;
+    bottom: 4rem;
+    display: block;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+nav li {
+    padding: 0;
+    margin: 0 .5rem 0 0;
+    background-color: #888;
+    border: 1px solid #222;
+    float: left;
+    font-size: .85rem;
+    width:25%;
+    text-align: center;
+}
+
+nav li a{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+}
+
+nav li a:hover:not(.active) {
+    background-color: #111;
+}
+
+#signout{
+    clear:both;
+}
+
+#signout{
+    margin:1rem;
+    position: absolute;
+    top:0;
+    right:2rem;
+    font-size: 0.8rem;
+}
+
+#wrapper p{
+    clear:both;
+    padding-top: 1rem;
+}
+
+canvas{
+    max-width: 99%;
+    margin: 1rem auto;
+}
+
+footer{
+    position: absolute;
+    margin: -1.5rem 0;
+}
