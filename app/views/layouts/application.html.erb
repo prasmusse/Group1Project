@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Group1Project</title>
-  <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-    <div id="gametitle">
-        <header>
-            <h1>"Not" Asteroids</h1>
-        </header>
-        <% if !current_user %>
-            <%= link_to image_tag("sign-in-with-google.png", :border=>0, :class => 'googleimage', :size => "164x36"), "/auth/google_oauth2", id: "sign_in" %>
-        <% end %>  
+    <head>
+      <title>Group1Project</title>
+      <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+      <%= csrf_meta_tags %>
+    </head>
+    <body>
+        <div id="gametitle">
+            <header>
+                <h1>"Not" Asteroids</h1>
+            </header>
+            <% if !current_user %>
+                <%= link_to image_tag("sign-in-with-google.png", :border=>0, :class => 'googleimage', :size => "164x36"), "/auth/google_oauth2", id: "sign_in" %>
+            <% end %>  
 
-        <% if current_user %>
-            <nav id="mainnav">
-                <ul>
-                    <li>
-                        <p><%=link_to 'Home', game_url %></p>
-                    </li>
-                    <li>
-                        <p><%=link_to 'LeaderBoard', leaderboard_url %></p>
-                    </li>
-                </ul>
-            </nav>
-            <div id="signout">
-                <p>Welcome, <%= current_user.name %>!<span><%= link_to "Sign out", signout_path, id: "game#index" %></span></p>
+            <% if current_user %>
+                <nav id="mainnav">
+                    <ul>
+                        <li>
+                            <p><%=link_to 'Home', game_url %></p>
+                        </li>
+                        <li>
+                            <p><%=link_to 'LeaderBoard', leaderboard_url %></p>
+                        </li>
+                    </ul>
+                </nav>
+                <div id="signout">
+                    <p>Welcome, <%= current_user.name %>!<span><%= link_to "Sign out", signout_path, id: "game#index" %></span></p>
+                </div>
+              <% end %>
+            <div id=wrapper>
+              <%= yield %>
             </div>
-          <% end %>
-        <div id=wrapper>
-          <%= yield %>
-        </div>
 
-        <footer>
-            <small>&copy; 2018 GroupOne. All rights reserved.</small>
-        </footer>
-    </div>
-</body>
+            <footer>
+                <small>&copy; 2018 GroupOne. All rights reserved.</small>
+            </footer>
+        </div>
+    </body>
 </html>
