@@ -13,6 +13,7 @@
     var asteroidYPath;
 
     function preload() {
+        game.load.image('starbackground', '<%= image_path('starrybackground.png') %>');
         game.load.image('spaceship', '<%= image_path('spaceship.png') %>');
         game.load.image('bullet', '<%= image_path('torpedo2.png') %>');
         game.load.image('asteroid', '<%= image_path('asteroids_demo.png') %>');
@@ -20,6 +21,9 @@
     }
 
     function create() {
+        
+        //Starry background
+        starbackground = game.add.tileSprite(0, 0, 960, 600, 'starbackground');
         // Add spaceship to the game
         spaceship = game.add.sprite(game.world.width/2, game.world.height - 100, 'spaceship');
         //  Enable physics on the spaceship
@@ -63,6 +67,8 @@
     }
 
     function update() {
+        // move background
+        starbackground.tilePosition.y += 2;
         
         // Get asteroids moving
         game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath + 150, 100);
