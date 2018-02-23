@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 Table{
-    margin: 0 auto;
+    margin: 0 auto 1.5rem;
     border: 1px solid;
     border-collapse: collapse;
     width:90%;
@@ -15,7 +15,7 @@ Table{
 }
 
 tr:nth-child(odd){
-    background-color:#f2f2f2;
+    background-color:#626262;
 }
 
 th, td{
