@@ -3,11 +3,13 @@
     var game = new Phaser.Game(960, 600, Phaser.AUTO, 'gamecontainer', { preload: preload, create: create, update: update });
     var spaceship;
     var asteroid;
+    var asteroids;
     var bullet;
     var bullets;
     var explosions;
     var explode;
     var fireButton;
+    var asteroidTime = 0;
     var bulletTime = 0;
     var asteroidXPath;
     var asteroidYPath;
@@ -21,7 +23,7 @@
     }
 
     function create() {
-        
+
         //Starry background
         starbackground = game.add.tileSprite(0, 0, 960, 600, 'starbackground');
         // Add spaceship to the game
@@ -42,42 +44,41 @@
         bullets.setAll('anchor.y', 1);
         bullets.setAll('outOfBoundsKill', true);
         bullets.setAll('checkWorldBounds', true);
-        
-        // Asteroids
-        // Add asteroid to the game
-        asteroid = game.add.sprite(50,50, 'asteroid');
-        asteroid.animations.add('explode');
-        
-        // Enable physics on the asteroid
-        game.physics.arcade.enable(asteroid);
-        
-        // Set the path of the asteroid
-        asteroidXPath = spaceship.world.x;
-        asteroidYPath = spaceship.world.y;
-        
-        
-        //explosions.createMultiple(30, 'asteroidExplosion');
-        //explosions.forEach(setupAsteroid, this);
-        
-        
+
+        //  Our asteroid group
+        asteroids = game.add.group();
+        asteroids.enableBody = true;
+        asteroids.physicsBodyType = Phaser.Physics.ARCADE;
+        asteroids.createMultiple(100, 'asteroid');
+        asteroids.setAll('anchor.x', 0.5);
+        asteroids.setAll('anchor.y', 1);
+        asteroids.setAll('outOfBoundsKill', true);
+        asteroids.setAll('checkWorldBounds', true);
+
         // Setup spacebar as fire button
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        
-        
+
+
     }
 
     function update() {
         // move background
         starbackground.tilePosition.y += 2;
-        
-        // Get asteroids moving
-        game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath + 150, 100);
-        
-        // Setup collisions
-        game.physics.arcade.overlap(asteroid, bullet, bulletHitAsteroid, null, this);
-        game.physics.arcade.overlap(asteroid, spaceship, asteroidHitSpaceship, null, this);
-        
-        
+
+        //drop the asteroid
+        asteroidDrop();
+
+        // find the ship position to send our asteroids to
+        asteroidXPath = spaceship.world.x;
+        asteroidYPath = spaceship.world.y;
+
+
+        // Setup collisions ***not currently working***
+        game.physics.arcade.overlap(asteroids, bullets, bulletHitAsteroid, null, this);
+        game.physics.arcade.overlap(asteroids, spaceship, asteroidHitSpaceship, null, this);
+        game.physics.arcade.collide(asteroids, asteroids);
+
+
         var cursors = game.input.keyboard.createCursorKeys();
         //  Reset the players velocity (movement)
         spaceship.body.velocity.x = 0;
@@ -129,41 +130,67 @@
 
         }
 
+        function asteroidDrop () {
+
+            //  To avoid them being allowed to fire too fast we set a time limit
+            if (game.time.now > asteroidTime)
+            {
+                //  Grab the first asteroid we can from the pool
+                asteroid = asteroids.getFirstExists(false);
+
+                if (asteroid)
+                {
+                    //  And fire it
+                    asteroid.reset(game.world.randomX, 0);
+                    game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath, 100);
+                    asteroidTime = game.time.now + 600;
+
+                }
+            }
+
+        }
+
+
         function resetBullet (bullet) {
 
             //  Called if the bullet goes out of the screen
             bullet.kill();
 
         }
-        
-        function bulletHitAsteroid() {
-            
+
+        function bulletHitAsteroid(asteroid, bullet) {
+
             // kill asteroid
             asteroid.kill();
-            
+
             // kill bullet
             bullet.kill();
-            
-            
+
+
             // Explosions
-            explosions = game.add.sprite(asteroid.x - (asteroid.width / 2), asteroid.y - (asteroid.height /  2), 'asteroidExplosion', 5);
-            explode = explosions.animations.add('explode')
-            explosions.animations.play('explode', false);
-        }
-        
-        function asteroidHitSpaceship() {
-            
+            explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
+            explode = explosions.animations.add('explode');
+            explosions.animations.play('explode', 50);
+            //this ends the explosion animation after half a second.
+          }
+
+        function asteroidHitSpaceship(spaceship, asteroid) {
+
             // kill asteroid
             asteroid.kill();
-            
+
             // kill spaceship
             spaceship.kill();
+
+            explosions = game.add.sprite(spaceship.x - 40, spaceship.y - 30, 'asteroidExplosion');
+            explode = explosions.animations.add('explode');
+            explosions.animations.play('explode', 10);
         }
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
     }
 })(jQuery);
