@@ -9,7 +9,7 @@
     var explosions;
     var explode;
     var fireButton;
-    var asteroidTime =0;
+    var asteroidTime = 0;
     var bulletTime = 0;
     var asteroidXPath;
     var asteroidYPath;
@@ -55,12 +55,6 @@
         asteroids.setAll('outOfBoundsKill', true);
         asteroids.setAll('checkWorldBounds', true);
         
-        
-        
-        //explosions.createMultiple(30, 'asteroidExplosion');
-        //explosions.forEach(setupAsteroid, this);
-        
-        
         // Setup spacebar as fire button
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         
@@ -82,6 +76,7 @@
         // Setup collisions ***not currently working***
         game.physics.arcade.overlap(asteroids, bullets, bulletHitAsteroid, null, this);
         game.physics.arcade.overlap(asteroids, spaceship, asteroidHitSpaceship, null, this);
+        game.physics.arcade.collide(asteroids, asteroids);
         
         
         var cursors = game.input.keyboard.createCursorKeys();
@@ -148,15 +143,14 @@
                     //  And fire it
                     asteroid.reset(game.world.randomX, 0);
                     game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath, 100);
-                    asteroidTime = game.time.now + 3000;
-                  //  asteroid.animate(0.01);
-                  //  asteroid.animations.add('explode');
-                    
+                    asteroidTime = game.time.now + 600;
+
                 }
             }
 
         }
-
+        
+        
         function resetBullet (bullet) {
 
             //  Called if the bullet goes out of the screen
@@ -177,9 +171,18 @@
             explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
             explode = explosions.animations.add('explode');
             explosions.animations.play('explode', false);
+            //this ends the explosion animation after half a second.
+            var endTime = game.time.now + 500;
+            if (game.time.now > endTime) {
+                explosions.kill();
+            }
+            
+            
+            
+            
         }
         
-        function asteroidHitSpaceship(asteroid) {
+        function asteroidHitSpaceship(spaceship, asteroid) {
             
             // kill asteroid
             asteroid.kill();
