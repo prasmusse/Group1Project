@@ -6,18 +6,25 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-5.times do
+10.times do
 	Score.create([{
-scoreID: '5',
-userID: Faker::Number.digit,
-score: Faker::Number.number(9),
-score_level_reached: '3',
-time: '5 minutes',
+		scoreID: '5',
+		userID: Faker::Number.digit,
+		score: Faker::Number.number(9),
+		score_level_reached: '3',
+		time: '5 minutes'
 
 		}])
 
 end
 
+10.times do
+	User.create([{
+		uid: Faker::Number.unique.digit,
+		name: Faker::Name.name
 
+		}])
+
+end
 
 

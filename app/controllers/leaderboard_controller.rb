@@ -1,5 +1,5 @@
 class LeaderboardController < ApplicationController 
  def index
- 	@leaderboard = Score.all;
+ 	@leaderboard = User.joins("INNER JOIN scores ON scores.userID = users.uid");
   end
 end
