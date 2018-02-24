@@ -25,3 +25,18 @@
         <td>4</td>
     </tr>
 </table>
+
+
+<table>
+    <tr id="tblHead">
+        <th>Player Name</th>
+        <th>Score</th>
+    </tr>
+    <% @leaderboard.each do |lb| %>
+    </tr>
+        <tr>
+        <td><%=  lb.userID %></td>
+        <td><%=   lb.score  %></td>
+    </tr>
+    <% end %>
+</table>
