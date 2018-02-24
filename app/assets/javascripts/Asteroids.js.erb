@@ -1,6 +1,6 @@
 
 (function($){
-    var game = new Phaser.Game(960, 600, Phaser.AUTO, 'gamecontainer', { preload: preload, create: create, update: update });
+    var game = new Phaser.Game(960, 600, Phaser.CANVAS, 'gamecontainer', { preload: preload, create: create, update: update });
     var spaceship;
     var asteroid;
     var asteroids;
@@ -13,6 +13,8 @@
     var bulletTime = 0;
     var asteroidXPath;
     var asteroidYPath;
+    var score = 0;
+    var firing = "go";
 
     function preload() {
         game.load.image('starbackground', '<%= image_path('starrybackground.png') %>');
@@ -54,6 +56,15 @@
         asteroids.setAll('anchor.y', 1);
         asteroids.setAll('outOfBoundsKill', true);
         asteroids.setAll('checkWorldBounds', true);
+
+        //add score keeper
+        count = 0;
+        text = game.add.text(game.world.centerX, game.world.centerY, "Score: 0", {
+        font: "65px Arial",
+        fill: "#ff0044",
+        align: "center"
+    });
+    text.anchor.setTo(0.5, 0.5);
 
         // Setup spacebar as fire button
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -106,7 +117,7 @@
         }
 
         //  Firing?
-        if (fireButton.isDown)
+        if (fireButton.isDown && firing == "go")
         {
             fireBullet();
         }
@@ -166,15 +177,18 @@
             // kill bullet
             bullet.kill();
 
+            updateScore();
 
             // Explosions
             explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
             explode = explosions.animations.add('explode');
             explosions.animations.play('explode', 50);
-            //this ends the explosion animation after half a second.
+
           }
 
         function asteroidHitSpaceship(spaceship, asteroid) {
+
+           firing = "stop";
 
             // kill asteroid
             asteroid.kill();
@@ -187,7 +201,13 @@
             explosions.animations.play('explode', 10);
         }
 
+        function updateScore() {
 
+            count++;
+
+            text.setText("Score: " + count + "");
+
+        }
 
 
 
