@@ -3,11 +3,13 @@
     var game = new Phaser.Game(960, 600, Phaser.AUTO, 'gamecontainer', { preload: preload, create: create, update: update });
     var spaceship;
     var asteroid;
+    var asteroids;
     var bullet;
     var bullets;
     var explosions;
     var explode;
     var fireButton;
+    var asteroidTime =0;
     var bulletTime = 0;
     var asteroidXPath;
     var asteroidYPath;
@@ -43,17 +45,16 @@
         bullets.setAll('outOfBoundsKill', true);
         bullets.setAll('checkWorldBounds', true);
         
-        // Asteroids
-        // Add asteroid to the game
-        asteroid = game.add.sprite(50,50, 'asteroid');
-        asteroid.animations.add('explode');
+        //  Our asteroid group
+        asteroids = game.add.group();
+        asteroids.enableBody = true;
+        asteroids.physicsBodyType = Phaser.Physics.ARCADE;
+        asteroids.createMultiple(100, 'asteroid');
+        asteroids.setAll('anchor.x', 0.5);
+        asteroids.setAll('anchor.y', 1);
+        asteroids.setAll('outOfBoundsKill', true);
+        asteroids.setAll('checkWorldBounds', true);
         
-        // Enable physics on the asteroid
-        game.physics.arcade.enable(asteroid);
-        
-        // Set the path of the asteroid
-        asteroidXPath = spaceship.world.x;
-        asteroidYPath = spaceship.world.y;
         
         
         //explosions.createMultiple(30, 'asteroidExplosion');
@@ -70,12 +71,17 @@
         // move background
         starbackground.tilePosition.y += 2;
         
-        // Get asteroids moving
-        game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath + 150, 100);
+        //drop the asteroid
+        asteroidDrop();
         
-        // Setup collisions
-        game.physics.arcade.overlap(asteroid, bullet, bulletHitAsteroid, null, this);
-        game.physics.arcade.overlap(asteroid, spaceship, asteroidHitSpaceship, null, this);
+        // find the ship position to send our asteroids to
+        asteroidXPath = spaceship.world.x;
+        asteroidYPath = spaceship.world.y;
+    
+        
+        // Setup collisions ***not currently working***
+        game.physics.arcade.overlap(asteroids, bullet, bulletHitAsteroid, null, this);
+        game.physics.arcade.overlap(asteroids, spaceship, asteroidHitSpaceship, null, this);
         
         
         var cursors = game.input.keyboard.createCursorKeys();
@@ -128,6 +134,27 @@
             }
 
         }
+        
+        function asteroidDrop () {
+
+            //  To avoid them being allowed to fire too fast we set a time limit
+            if (game.time.now > asteroidTime)
+            {
+                //  Grab the first asteroid we can from the pool
+                asteroid = asteroids.getFirstExists(false);
+
+                if (asteroid)
+                {
+                    //  And fire it
+                    asteroid.reset(game.world.randomX, 0);
+                    game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath);
+                    asteroidTime = game.time.now + 2000;
+                    asteroid.animations.add('explode');
+                    
+                }
+            }
+
+        }
 
         function resetBullet (bullet) {
 
@@ -147,14 +174,14 @@
             
             // Explosions
             explosions = game.add.sprite(asteroid.x - (asteroid.width / 2), asteroid.y - (asteroid.height /  2), 'asteroidExplosion', 5);
-            explode = explosions.animations.add('explode')
+            explode = explosions.animations.add('explode');
             explosions.animations.play('explode', false);
         }
         
         function asteroidHitSpaceship() {
             
             // kill asteroid
-            asteroid.kill();
+            asteroids.kill();
             
             // kill spaceship
             spaceship.kill();
