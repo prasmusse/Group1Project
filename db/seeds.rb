@@ -8,19 +8,15 @@
 
 10.times do
 	Score.create([{
-		scoreID: '5',
-		userID: Faker::Number.digit,
 		score: Faker::Number.number(9),
-		score_level_reached: '3',
-		time: '5 minutes'
-
+		user_id: Faker::Number.digit
+	
 		}])
 
 end
 
 10.times do
 	User.create([{
-		uid: Faker::Number.unique.digit,
 		name: Faker::Name.name
 
 		}])

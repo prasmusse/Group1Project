@@ -1,5 +1,22 @@
 class LeaderboardController < ApplicationController 
+ before_action :get_users
+
  def index
- 	@leaderboard = User.joins("INNER JOIN scores ON scores.userID = users.uid");
+ 	@scores = User.all
+
+  @scores2 = User.joins(:scores).where("users.id = scores.user_id").select('users.name as name', 'scores.score as score')
+
+
   end
+
+
+
+  def get_users
+
+    @users = User.all.collect{|u| [u.name, u.id]}
+
+  end
+
+
+
 end

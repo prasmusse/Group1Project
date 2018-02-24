@@ -5,11 +5,10 @@
         <th>Player Name</th>
         <th>Score</th>
     </tr>
-    <% @leaderboard.each do |lb| %>
-    </tr>
-        <tr>
-        <td><%=  lb.name %></td>
-        <td><%=  lb.name %></td>
-    </tr>
+    <% @scores2.each do |score| %>    
+      <tr>
+        <td><%=  score.name %></td>
+        <td><%=  score.score %></td>
+      </tr>
     <% end %>
 </table>

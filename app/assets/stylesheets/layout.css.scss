@@ -19,6 +19,16 @@ body{
   }
 }
 
+#inner::before{
+  position: relative;
+  content: '';
+  background-color: rgba(91, 41, 113, .5);
+  width: 960px;
+  height: 600px;
+
+
+}
+
 .content, header, footer{
   padding:1%;
 }
