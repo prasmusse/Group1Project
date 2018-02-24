@@ -80,7 +80,7 @@
     
         
         // Setup collisions ***not currently working***
-        game.physics.arcade.overlap(asteroids, bullet, bulletHitAsteroid, null, this);
+        game.physics.arcade.overlap(asteroids, bullets, bulletHitAsteroid, null, this);
         game.physics.arcade.overlap(asteroids, spaceship, asteroidHitSpaceship, null, this);
         
         
@@ -147,9 +147,10 @@
                 {
                     //  And fire it
                     asteroid.reset(game.world.randomX, 0);
-                    game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath);
-                    asteroidTime = game.time.now + 2000;
-                    asteroid.animations.add('explode');
+                    game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath, 100);
+                    asteroidTime = game.time.now + 3000;
+                  //  asteroid.animate(0.01);
+                  //  asteroid.animations.add('explode');
                     
                 }
             }
@@ -163,7 +164,7 @@
 
         }
         
-        function bulletHitAsteroid() {
+        function bulletHitAsteroid(asteroid, bullet) {
             
             // kill asteroid
             asteroid.kill();
@@ -173,15 +174,15 @@
             
             
             // Explosions
-            explosions = game.add.sprite(asteroid.x - (asteroid.width / 2), asteroid.y - (asteroid.height /  2), 'asteroidExplosion', 5);
+            explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
             explode = explosions.animations.add('explode');
             explosions.animations.play('explode', false);
         }
         
-        function asteroidHitSpaceship() {
+        function asteroidHitSpaceship(asteroid) {
             
             // kill asteroid
-            asteroids.kill();
+            asteroid.kill();
             
             // kill spaceship
             spaceship.kill();
