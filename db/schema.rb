@@ -14,8 +14,14 @@
 ActiveRecord::Schema.define(version: 20180224213244) do
 
   create_table "scores", force: :cascade do |t|
-    t.integer "score"
-    t.integer "user_id"
+    t.integer  "scoreID"
+    t.integer  "userID"
+    t.integer  "score"
+    t.integer  "score_level_reached"
+    t.datetime "time"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "user_id"
   end
 
   add_index "scores", ["user_id"], name: "index_scores_on_user_id"
