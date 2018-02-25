@@ -157,6 +157,7 @@
                     asteroid.reset(game.world.randomX, 0);
                     game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath, 100);
                     asteroidTime = game.time.now + 600;
+                    asteroid.scale.setTo((Math.random() * 4) + .5);
 
                 }
             }
