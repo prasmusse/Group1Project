@@ -11,9 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180224213244) do
+ActiveRecord::Schema.define(version: 20180225214920) do
 
   create_table "scores", force: :cascade do |t|
+<<<<<<< HEAD
     t.integer  "scoreID"
     t.integer  "userID"
     t.integer  "score"
@@ -21,6 +22,11 @@ ActiveRecord::Schema.define(version: 20180224213244) do
     t.datetime "time"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+=======
+    t.integer  "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+>>>>>>> 0bdc287ca6cff9ec3ab52dba321b5e78ca1e3814
     t.integer  "user_id"
   end
 
