@@ -4,20 +4,21 @@
     var spaceship;
     var asteroid;
     var asteroids;
-    var bullet;
-    var bullets;
-    var explosions;
-    var explode;
-    var fireButton;
     var asteroidTime = 0;
-    var bulletTime = 0;
     var asteroidXPath;
     var asteroidYPath;
-    var score = 0;
-    var firing = "go";
+    var bulletTime = 0;
+    var bullet;
+    var bullets;
     var emitter;
+    var explode;
+    var explosions;
+    var fireButton;
+    var firing = "go";
+    var score = 0;
 
     function preload() {
+        //load all our sprite images
         game.load.image('star', '<%= image_path('spark.png') %>');
         game.load.image('spaceship', '<%= image_path('spaceship.png') %>');
         game.load.image('bullet', '<%= image_path('torpedo2.png') %>');
@@ -26,25 +27,23 @@
     }
 
     function create() {
+        
+        // Adds a starry particle background
         emitter = game.add.emitter(game.world.centerX, 0, 400);
-
         emitter.width = game.world.width;
-
         emitter.makeParticles('star');
-
         emitter.minParticleScale = 0.1;
-	      emitter.maxParticleScale = 0.2;
-
-	      emitter.setYSpeed(500, 600);
-	      emitter.setXSpeed(-5, 5);
+	    emitter.maxParticleScale = 0.2;
+	    emitter.setYSpeed(500, 600);
+	    emitter.setXSpeed(-5, 5);
         emitter.minRotation = 0;
         emitter.maxRotation = 0
-
         emitter.start(false, 1600, 5, 0);
 
-        //Starry background
-
+        //Starry background    ***old and caused lag*** 
         //starbackground = game.add.tileSprite(0, 0, 960, 600, 'starbackground');
+        
+        
         // Add spaceship to the game
         spaceship = game.add.sprite(game.world.width/2, game.world.height - 100, 'spaceship');
         //  Enable physics on the spaceship
@@ -82,6 +81,7 @@
         });
         scoreText.anchor.setTo(0.5, 0.5);
 
+        // Sets up game over screen
         gameOverText = game.add.text(game.world.centerX,game.world.centerY,' ', { font: '84px Arial', fill: '#fff' });
         gameOverText.anchor.setTo(0.5, 0.5);
         gameOverText.visible = false;
@@ -93,46 +93,45 @@
     }
 
     function update() {
-        // move background
+        
+        // ***old and caused lag*** 
+        //move background
         //starbackground.tilePosition.y += 2;
 
-        //drop the asteroid
+        //drop the asteroids
         asteroidDrop();
 
-        // find the ship position to send our asteroids to
+        //find the ship position to send our asteroids to
         asteroidXPath = spaceship.world.x;
         asteroidYPath = spaceship.world.y;
 
-
-        // Setup collisions ***not currently working***
+        //Setup collisions
         game.physics.arcade.overlap(asteroids, bullets, bulletHitAsteroid, null, this);
         game.physics.arcade.overlap(asteroids, spaceship, asteroidHitSpaceship, null, this);
         game.physics.arcade.collide(asteroids, asteroids);
 
 
         var cursors = game.input.keyboard.createCursorKeys();
-        //  Reset the players velocity (movement)
+        //Reset the players velocity (movement)
         spaceship.body.velocity.x = 0;
 
+        // Ship movement responds to keyboard
         if (cursors.left.isDown)
         {
             //  Move to the left
             spaceship.body.velocity.x = -150;
-
             spaceship.animations.play('left');
-        }
+        } 
         else if (cursors.right.isDown)
         {
             //  Move to the right
             spaceship.body.velocity.x = 150;
-
             spaceship.animations.play('right');
         }
         else
         {
             //  Stand still
             spaceship.animations.stop();
-
             spaceship.frame = 4;
         }
 
@@ -163,7 +162,7 @@
 
         function asteroidDrop() {
 
-            //  To avoid them being allowed to fire too fast we set a time limit
+            //  To avoid them being allowed to fall too frequently we set a time limit
             if (game.time.now > asteroidTime)
             {
                 //  Grab the first asteroid we can from the pool
@@ -171,10 +170,10 @@
 
                 if (asteroid)
                 {
-                    //  And fire it
+                    //  And drop it
                     asteroid.reset(game.world.randomX, -30);
-                    game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath, 100);
-                    asteroidTime = game.time.now + 600;
+                    game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath, (Math.random() * 300) + 50);
+                    asteroidTime = (game.time.now + ((Math.random() * 1000) + 100));
                     asteroid.scale.setTo((Math.random() * 1.5) + .5);
                     asteroid.body.angularAcceleration = (Math.random() * 50) + 5;
 
