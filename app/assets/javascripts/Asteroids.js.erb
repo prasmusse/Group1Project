@@ -32,10 +32,10 @@
 
         emitter.makeParticles('star');
 
-        emitter.minParticleScale = 0.05;
-	      emitter.maxParticleScale = 0.1;
+        emitter.minParticleScale = 0.1;
+	      emitter.maxParticleScale = 0.2;
 
-	      emitter.setYSpeed(500, 700);
+	      emitter.setYSpeed(500, 600);
 	      emitter.setXSpeed(-5, 5);
         emitter.minRotation = 0;
         emitter.maxRotation = 0
@@ -70,7 +70,7 @@
         asteroids.physicsBodyType = Phaser.Physics.ARCADE;
         asteroids.createMultiple(100, 'asteroid');
         asteroids.setAll('anchor.x', 0.5);
-        asteroids.setAll('anchor.y', 1);
+        asteroids.setAll('anchor.y', 0.5);
         asteroids.setAll('outOfBoundsKill', true);
         asteroids.setAll('checkWorldBounds', true);
 
@@ -172,10 +172,12 @@
                 if (asteroid)
                 {
                     //  And fire it
-                    asteroid.reset(game.world.randomX, 0);
+                    asteroid.reset(game.world.randomX, -30);
                     game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath, 100);
                     asteroidTime = game.time.now + 600;
                     asteroid.scale.setTo((Math.random() * 1.5) + .5);
+                    asteroid.body.angularAcceleration = (Math.random() * 50) + 5;
+
 
                 }
             }
