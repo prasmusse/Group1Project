@@ -89,7 +89,6 @@
         // Setup spacebar as fire button
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-
     }
 
     function update() {
@@ -109,7 +108,6 @@
         game.physics.arcade.overlap(asteroids, bullets, bulletHitAsteroid, null, this);
         game.physics.arcade.overlap(asteroids, spaceship, asteroidHitSpaceship, null, this);
         game.physics.arcade.collide(asteroids, asteroids);
-
 
         var cursors = game.input.keyboard.createCursorKeys();
         //Reset the players velocity (movement)
@@ -176,13 +174,9 @@
                     asteroidTime = (game.time.now + ((Math.random() * 1000) + 100));
                     asteroid.scale.setTo((Math.random() * 1.5) + .5);
                     asteroid.body.angularAcceleration = (Math.random() * 50) + 5;
-
-
                 }
             }
-
         }
-
 
         function resetBullet (bullet) {
 
@@ -228,7 +222,6 @@
         function updateScore() {
 
             score++;
-
             scoreText.setText("Score: " + score + "");
 
         }
@@ -246,23 +239,14 @@
         function restart () {
             //allows firing again
             firing = "go";
+            
             //  A new level starts
-
             //  And brings the aliens back from the dead :)
             asteroids.removeAll();
             //hides the text
             gameOverText.visible = false;
             //runs create function to bring back all the objects
             create()
-
-
-
-
-
         }
-
-
-
-
     }
 })(jQuery);
