@@ -15,9 +15,10 @@
     var asteroidYPath;
     var score = 0;
     var firing = "go";
+    var emitter;
 
     function preload() {
-        game.load.image('starbackground', '<%= image_path('starrybackground.png') %>');
+        game.load.image('star', '<%= image_path('spark.png') %>');
         game.load.image('spaceship', '<%= image_path('spaceship.png') %>');
         game.load.image('bullet', '<%= image_path('torpedo2.png') %>');
         game.load.image('asteroid', '<%= image_path('asteroids_demo.png') %>');
@@ -25,8 +26,25 @@
     }
 
     function create() {
+        emitter = game.add.emitter(game.world.centerX, 0, 400);
+
+        emitter.width = game.world.width;
+
+        emitter.makeParticles('star');
+
+        emitter.minParticleScale = 0.05;
+	      emitter.maxParticleScale = 0.1;
+
+	      emitter.setYSpeed(500, 700);
+	      emitter.setXSpeed(-5, 5);
+        emitter.minRotation = 0;
+        emitter.maxRotation = 0
+
+        emitter.start(false, 1600, 5, 0);
+
         //Starry background
-        starbackground = game.add.tileSprite(0, 0, 960, 600, 'starbackground');
+
+        //starbackground = game.add.tileSprite(0, 0, 960, 600, 'starbackground');
         // Add spaceship to the game
         spaceship = game.add.sprite(game.world.width/2, game.world.height - 100, 'spaceship');
         //  Enable physics on the spaceship
@@ -76,7 +94,7 @@
 
     function update() {
         // move background
-        starbackground.tilePosition.y += 2;
+        //starbackground.tilePosition.y += 2;
 
         //drop the asteroid
         asteroidDrop();
@@ -157,7 +175,7 @@
                     asteroid.reset(game.world.randomX, 0);
                     game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath, 100);
                     asteroidTime = game.time.now + 600;
-                    asteroid.scale.setTo((Math.random() * 4) + .5);
+                    asteroid.scale.setTo((Math.random() * 1.5) + .5);
 
                 }
             }
@@ -231,12 +249,14 @@
 
             //  And brings the aliens back from the dead :)
             asteroids.removeAll();
+            //hides the text
+            gameOverText.visible = false;
             //runs create function to bring back all the objects
             create()
 
 
-            //hides the text
-            gameOverText.visible = false;
+
+
 
         }
 
