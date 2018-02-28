@@ -151,23 +151,25 @@
         }
 
         function fireBullet () {
-
-            //  To avoid them being allowed to fire too fast we set a time limit
-            if (game.time.now > bulletTime)
-            {
-                //  Grab the first bullet we can from the pool
-                bullet = bullets.getFirstExists(false);
-
-                if (bullet)
+            //if the bullets are out do not allow user to fire
+            if(bulletCounter >= 1){
+                
+                //  To avoid them being allowed to fire too fast we set a time limit
+                if (game.time.now > bulletTime)
                 {
-                    //  And fire it
-                    bullet.reset(spaceship.x + 30, spaceship.y + 8);
-                    bullet.body.velocity.y = -400;
-                    bulletTime = game.time.now + 200;
-                }
-                updateBulletFire();
-            }
+                    //  Grab the first bullet we can from the pool
+                    bullet = bullets.getFirstExists(false);
 
+                    if (bullet)
+                    {
+                        //  And fire it
+                        bullet.reset(spaceship.x + 30, spaceship.y + 8);
+                        bullet.body.velocity.y = -400;
+                        bulletTime = game.time.now + 200;
+                    }
+                updateBulletFire();
+                }
+            }
         }
 
         function asteroidDrop() {
