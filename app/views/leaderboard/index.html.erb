@@ -2,11 +2,13 @@
 
 <table>
     <tr id="tblHead">
+        <th>Image</th>
         <th>Player Name</th>
         <th>Score</th>
     </tr>
     <% @scores2.each do |score| %>    
       <tr>
+        <td><%= score.image%></td>
         <td><%=  score.name %></td>
         <td><%=  score.score %></td>
       </tr>

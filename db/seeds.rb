@@ -17,7 +17,8 @@ end
 
 10.times do
 	User.create([{
-		name: Faker::Name.name
+		name: Faker::Name.name,
+    image: "https://cdn.pixabay.com/photo/2018/02/21/18/24/cat-3171125_1280.jpg"
 
 		}])
 
