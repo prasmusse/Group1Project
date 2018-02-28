@@ -19,6 +19,9 @@
     var bullets = 0;
     var livesText;
     var lives = 3;
+    var accuracy = 1;
+    var shotsFired = 1;
+    var shotsHit = 1;
 
     function preload() {
         //load all our sprite images
@@ -46,12 +49,20 @@
         livesText.anchor.setTo(0.5, 0.5);
         
         //add bullet count to game
-        bulletText = game.add.text(game.world.centerX - 460, game.world.centerY - 205, "Bullets: 30", {
+        bulletText = game.add.text(game.world.centerX - 390, game.world.centerY - 205, "Bullets: 30", {
         font: "40px Arial",
         fill: "#F83F00",
         align: "center"
         });
-        scoreText.anchor.setTo(0.5, 0.5);
+        bulletText.anchor.setTo(0.5, 0.5);
+        
+        //add accuracy counter to game
+        accuracyText = game.add.text(game.world.centerX + 230, game.world.centerY - 205, "Accuracy: 100%", {
+        font: "25px Arial",
+        fill: "#F83F00",
+        align: "center"
+        });
+        accuracyText.anchor.setTo(0.5, 0.5);
         
     }
 
@@ -167,6 +178,8 @@
         {
             fireBullet();
         }
+        
+        updateAccuracy();
 
         function fireBullet () {
 
@@ -184,6 +197,8 @@
                     bulletTime = game.time.now + 200;
                 }
                 updateBulletFire();
+                
+                updateAccuracy();
             }
 
         }
@@ -224,6 +239,7 @@
             bullet.kill();
 
             updateScore();
+            updateAccuracy();
             updateBulletAdd();
 
             // Explosions
@@ -245,7 +261,7 @@
                     asteroid.kill();
                     break;
                 case 1:
-                    life1.kill()
+                    life1.kill();
                     
                     bulletCounter = 0;
 
@@ -268,6 +284,7 @@
 
           }
         function updateBulletFire() {
+            shotsFired++;
             bulletCounter--;
             bulletText.setText("Bullets: " + bulletCounter + "");
         }
@@ -280,6 +297,12 @@
             } else {
                 bulletCounter++;
             }
+            shotsHit++;
+        }
+        
+        function updateAccuracy() {
+            accuracy = (shotsHit / shotsFired) * 100;
+            accuracyText.setText("Accuracy: " + Math.round(accuracy) +"%");
         }
 
         function updateScore() {
@@ -310,6 +333,13 @@
             //reset bullet counter back to 30
             bulletCounter = 31;
             updateBulletFire();
+            
+            //reset accuracy
+            shotsFired = 1;
+            shotsHit = 1;
+            accuracy = 1;
+            updateAccuracy();
+            
             
             //  A new level starts
             //  And brings the aliens back from the dead :)
