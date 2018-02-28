@@ -17,7 +17,8 @@ end
 
 10.times do
 	User.create([{
-		name: Faker::Name.name
+		name: Faker::Name.name,
+    image: "http://www.mattsarg.com/get.php?id=69"
 
 		}])
 
