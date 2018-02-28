@@ -16,6 +16,7 @@
     var fireButton;
     var firing = "go";
     var score = 0;
+    var bullets = 0;
 
     function preload() {
         //load all our sprite images
@@ -199,7 +200,8 @@
             explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
             explode = explosions.animations.add('explode');
             explosions.animations.play('explode', 50);
-
+            
+            bullet = 
           }
 
         function asteroidHitSpaceship(spaceship, asteroid) {
@@ -239,6 +241,9 @@
         function restart () {
             //allows firing again
             firing = "go";
+            
+            //reset score back to zero
+            score = 0;
             
             //  A new level starts
             //  And brings the aliens back from the dead :)
