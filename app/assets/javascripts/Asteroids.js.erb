@@ -14,9 +14,8 @@
     var explode;
     var explosions;
     var fireButton;
-    var firing = "go";
     var score = 0;
-    var bullets = 0;
+    var bulletCounter = 30;
 
     function preload() {
         //load all our sprite images
@@ -33,6 +32,14 @@
         align: "center"
         });
         scoreText.anchor.setTo(0.5, 0.5);
+        
+        //add bullet count
+        bulletText = game.add.text(game.world.centerX - 390, game.world.centerY - 205, "Bullets: 30", {
+        font: "40px Arial",
+        fill: "#F83F00",
+        align: "center"
+        });
+        bulletText.anchor.setTo(0.5, 0.5);
     }
 
     function create() {
@@ -137,28 +144,28 @@
         }
 
         //  Firing?
-        if (fireButton.isDown && firing == "go")
+        if (fireButton.isDown && bulletCounter > 0)
         {
             fireBullet();
         }
 
         function fireBullet () {
-
-            //  To avoid them being allowed to fire too fast we set a time limit
-            if (game.time.now > bulletTime)
-            {
-                //  Grab the first bullet we can from the pool
-                bullet = bullets.getFirstExists(false);
-
-                if (bullet)
+                
+                //  To avoid them being allowed to fire too fast we set a time limit
+                if (game.time.now > bulletTime)
                 {
-                    //  And fire it
-                    bullet.reset(spaceship.x + 30, spaceship.y + 8);
-                    bullet.body.velocity.y = -400;
-                    bulletTime = game.time.now + 200;
-                }
-            }
+                    //  Grab the first bullet we can from the pool
+                    bullet = bullets.getFirstExists(false);
 
+                    if (bullet)
+                    {
+                        //  And fire it
+                        bullet.reset(spaceship.x + 30, spaceship.y + 8);
+                        bullet.body.velocity.y = -400;
+                        bulletTime = game.time.now + 200;
+                    }
+                updateBulletFire();
+                }
         }
 
         function asteroidDrop() {
@@ -197,6 +204,7 @@
             bullet.kill();
 
             updateScore();
+            updateBulletAdd();
 
             // Explosions
             explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
@@ -208,7 +216,7 @@
 
         function asteroidHitSpaceship(spaceship, asteroid) {
 
-           firing = "stop";
+           bulletCounter = 0;
 
             // kill asteroid
             asteroid.kill();
@@ -229,6 +237,23 @@
             scoreText.setText("Score: " + score + "");
 
         }
+        
+        function updateBulletFire() {
+            bulletCounter--;
+            bulletText.setText("Bullets: " + bulletCounter + "")
+            
+        }
+        
+        function updateBulletAdd() {
+            if (asteroid.width > 40) {
+                bulletCounter += 3;
+            } else if (asteroid.width > 25) {
+                bulletCounter += 2;
+            } else {
+                bulletCounter++;
+            }
+            bulletText.setText("Bullets: " + bulletCounter + "")
+        }
 
         function gameOver() {
 
@@ -241,12 +266,15 @@
         }
 
         function restart () {
-            //allows firing again
-            firing = "go";
             
             //reset score back to zero
             score = -1;
             updateScore();
+            
+            //reset BulletCount back to 30
+            bulletCounter = 31;
+            updateBulletFire();
+            
             
             //  A new level starts
             //  And brings the aliens back from the dead :)
