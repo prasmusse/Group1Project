@@ -145,14 +145,12 @@
         }
 
         //  Firing?
-        if (fireButton.isDown && firing == "go")
+        if (fireButton.isDown && bulletCounter > 0)
         {
             fireBullet();
         }
 
         function fireBullet () {
-            //if the bullets are out do not allow user to fire
-            if(bulletCounter >= 1){
                 
                 //  To avoid them being allowed to fire too fast we set a time limit
                 if (game.time.now > bulletTime)
@@ -169,7 +167,6 @@
                     }
                 updateBulletFire();
                 }
-            }
         }
 
         function asteroidDrop() {
@@ -220,7 +217,7 @@
 
         function asteroidHitSpaceship(spaceship, asteroid) {
 
-           firing = "stop";
+           bulletCounter = 0;
 
             // kill asteroid
             asteroid.kill();
@@ -270,8 +267,6 @@
         }
 
         function restart () {
-            //allows firing again
-            firing = "go";
             
             //reset score back to zero
             score = -1;
