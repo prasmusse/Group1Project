@@ -8,7 +8,7 @@
     </tr>
     <% @scores2.each do |score| %>    
       <tr>
-        <td><%= score.image%></td>
+        <td><%= image_tag(score.image, :size => "50x50") %></td>
         <td><%=  score.name %></td>
         <td><%=  score.score %></td>
       </tr>
