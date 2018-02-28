@@ -19,9 +19,9 @@
     var bullets = 0;
     var livesText;
     var lives = 3;
-    var accuracy = 0;
-    var shotsFired = 0;
-    var shotsHit = 0;
+    var accuracy = 1;
+    var shotsFired = 1;
+    var shotsHit = 1;
 
     function preload() {
         //load all our sprite images
@@ -57,7 +57,7 @@
         bulletText.anchor.setTo(0.5, 0.5);
         
         //add accuracy counter to game
-        accuracyText = game.add.text(game.world.centerX + 230, game.world.centerY - 205, "Accuracy: 0%", {
+        accuracyText = game.add.text(game.world.centerX + 230, game.world.centerY - 205, "Accuracy: 100%", {
         font: "25px Arial",
         fill: "#F83F00",
         align: "center"
@@ -178,6 +178,8 @@
         {
             fireBullet();
         }
+        
+        updateAccuracy();
 
         function fireBullet () {
 
@@ -333,9 +335,9 @@
             updateBulletFire();
             
             //reset accuracy
-            shotsFired = 0;
-            shotsHit = 0;
-            accuracy = 0;
+            shotsFired = 1;
+            shotsHit = 1;
+            accuracy = 1;
             updateAccuracy();
             
             
