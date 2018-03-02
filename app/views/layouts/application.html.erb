@@ -28,7 +28,7 @@
                     </ul>
                 </nav>
                 <div id="signout">
-                    <p>Welcome, <%= current_user.name %>!<%= image_tag(current_user.image, :size => "50x50") %><span><%= link_to "Sign out", signout_path, id: "game#index" %></span></p>
+                    <p>Welcome, <%= current_user.name %>!<span><%= current_user.email %><br><%= image_tag(current_user.image, :size => "50x50") %></span><span><%= link_to "Sign out", signout_path, id: "game#index" %></span></p>
                 </div>
               <% end %>
             <div id=wrapper>
