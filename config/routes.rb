@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  get '/new', controller: 'leaderboard', action: 'new', as: 'new'
+
   get '/game', controller: 'game', action: 'index', as: 'game'
 
   get '/leaderboard', controller: 'leaderboard', action: 'index', as: 'leaderboard'
