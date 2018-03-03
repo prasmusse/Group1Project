@@ -41,34 +41,31 @@
         game.load.audio('shipBoom', '<%= asset_path('explosion.wav') %>');
         
         //add score keeper
-        scoreText = game.add.text(game.world.centerX - 390, game.world.centerY - 265, "Score: 0", {
+        scoreText = game.add.text(game.world.centerX - 475, game.world.centerY - 300, "Score: 0", {
         font: "40px Arial",
         fill: "#F83F00",
-        align: "center"
+        align: "left"
         });
-        scoreText.anchor.setTo(0.5, 0.5);
         
         //add lives text to the game
-        livesText = game.add.text(game.world.centerX + 230, game.world.centerY - 265, "Lives:", {
+        livesText = game.add.text(game.world.centerX + 220, game.world.centerY - 295, "Lives:", {
         font: "40px Arial",
         fill: "#F83F00",
-        align: "center"
+        align: "left"
         });
-        livesText.anchor.setTo(0.5, 0.5);
         
         //add bullet count to game
-        bulletText = game.add.text(game.world.centerX - 390, game.world.centerY - 205, "Bullets: 30", {
+        bulletText = game.add.text(game.world.centerX - 475, game.world.centerY - 255, "Bullets: 30", {
         font: "40px Arial",
         fill: "#F83F00",
-        align: "center"
+        align: "left"
         });
-        bulletText.anchor.setTo(0.5, 0.5);
         
         //add accuracy counter to game
-        accuracyText = game.add.text(game.world.centerX + 230, game.world.centerY - 205, "Accuracy: 100%", {
+        accuracyText = game.add.text(game.world.centerX + 375, game.world.centerY - 205, "Accuracy: 100%", {
         font: "25px Arial",
         fill: "#F83F00",
-        align: "center"
+        align: "left"
         });
         accuracyText.anchor.setTo(0.5, 0.5);
         
