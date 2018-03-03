@@ -121,7 +121,7 @@
         asteroids = game.add.group();
         asteroids.enableBody = true;
         asteroids.physicsBodyType = Phaser.Physics.ARCADE;
-        asteroids.createMultiple(100, 'asteroid');
+        asteroids.createMultiple(200, 'asteroid');
         asteroids.setAll('anchor.x', 0.5);
         asteroids.setAll('anchor.y', 0.5);
         asteroids.setAll('outOfBoundsKill', true);
@@ -229,7 +229,20 @@
                     //  And drop it
                     asteroid.reset(game.world.randomX, -30);
                     game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath, (Math.random() * 300) + 50);
-                    asteroidTime = (game.time.now + ((Math.random() * 1000) + 100));
+                    // Progressive Difficulty
+                    if (game.time.now < 30000) {
+                        asteroidTime = (game.time.now + ((Math.random() * 1000) + 100));
+                    } else if (game.time.now < 60000) {
+                        asteroidTime = (game.time.now + ((Math.random() * 1000) - 100));
+                    } else if (game.time.now < 90000)  {
+                        asteroidTime = (game.time.now + ((Math.random() * 1000) - 300));
+                    } else if (game.time.now < 120000)  {
+                        asteroidTime = (game.time.now + ((Math.random() * 1000) - 500));
+                    } else if (game.time.now < 150000)  {
+                        asteroidTime = (game.time.now + ((Math.random() * 1000) - 700));
+                    } else if (game.time.now < 180000)  {
+                        asteroidTime = (game.time.now + ((Math.random() * 1000) - 900));
+                    } 
                     asteroid.scale.setTo((Math.random() * 1.5) + .5);
                     asteroid.body.angularAcceleration = (Math.random() * 50) + 5;
                 }
