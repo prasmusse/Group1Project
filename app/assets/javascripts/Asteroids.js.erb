@@ -22,6 +22,10 @@
     var accuracy = 1;
     var shotsFired = 1;
     var shotsHit = 1;
+    
+    var laserShot;
+    var asteriodBoom;
+    var shipBoom;
 
     function preload() {
         //load all our sprite images
@@ -31,6 +35,10 @@
         game.load.image('asteroid', '<%= image_path('asteroids_demo.png') %>');
         game.load.spritesheet('asteroidExplosion', '<%= image_path('explosion_sprite_sheet.png') %>', 128, 128);
         game.load.image('lives', '<%= image_path('spaceship.png') %>');
+        
+        game.load.audio('laserShot', '<%= asset_path('laserShot.wav') %>');
+        game.load.audio('asteriodBoom', '<%= asset_path('darkExplosion.wav') %>');
+        game.load.audio('shipBoom', '<%= asset_path('explosion.wav') %>');
         
         //add score keeper
         scoreText = game.add.text(game.world.centerX - 390, game.world.centerY - 265, "Score: 0", {
@@ -67,6 +75,11 @@
     }
 
     function create() {
+        
+        
+        laserShot = game.add.audio('laserShot');
+        asteriodBoom = game.add.audio('asteriodBoom');
+        shipBoom = game.add.audio('shipBoom');
         
         // Adds a starry particle background
         emitter = game.add.emitter(game.world.centerX, 0, 400);
@@ -197,7 +210,7 @@
                     bulletTime = game.time.now + 200;
                 }
                 updateBulletFire();
-                
+                laserShot.play();
                 updateAccuracy();
             }
 
@@ -246,6 +259,7 @@
             explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
             explode = explosions.animations.add('explode');
             explosions.animations.play('explode', 50);
+            asteriodBoom.play();
             
              
           }
@@ -255,10 +269,12 @@
                 case 3:
                     life3.kill();
                     asteroid.kill();
+                    asteriodBoom.play();
                     break;
                 case 2:
                     life2.kill();
                     asteroid.kill();
+                    asteriodBoom.play();
                     break;
                 case 1:
                     life1.kill();
@@ -274,7 +290,7 @@
                     explosions = game.add.sprite(spaceship.x - 40, spaceship.y - 30, 'asteroidExplosion');
                     explode = explosions.animations.add('explode');
                     explosions.animations.play('explode', 10);
-                    
+                    shipBoom.play();
                     gameOver();       
             }
             
