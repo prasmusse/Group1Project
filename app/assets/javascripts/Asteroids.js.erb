@@ -22,6 +22,8 @@
     var accuracy = 1;
     var shotsFired = 1;
     var shotsHit = 1;
+    
+    var fx;
 
     function preload() {
         //load all our sprite images
@@ -31,6 +33,8 @@
         game.load.image('asteroid', '<%= image_path('asteroids_demo.png') %>');
         game.load.spritesheet('asteroidExplosion', '<%= image_path('explosion_sprite_sheet.png') %>', 128, 128);
         game.load.image('lives', '<%= image_path('spaceship.png') %>');
+        
+        game.load.audio('sfx', '<%= asset_path('laserShot.wav') %>');
         
         //add score keeper
         scoreText = game.add.text(game.world.centerX - 390, game.world.centerY - 265, "Score: 0", {
@@ -67,6 +71,9 @@
     }
 
     function create() {
+        
+        
+        fx = game.add.audio('sfx');
         
         // Adds a starry particle background
         emitter = game.add.emitter(game.world.centerX, 0, 400);
@@ -197,7 +204,7 @@
                     bulletTime = game.time.now + 200;
                 }
                 updateBulletFire();
-                
+                fx.play();
                 updateAccuracy();
             }
 
