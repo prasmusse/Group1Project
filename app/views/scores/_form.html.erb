@@ -1,0 +1,30 @@
+<%= form_for @score, :remote => true do |f| %>
+  <% if @score.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@score.errors.count, "error") %> prohibited this score from being saved:</h2>
+
+      <ul>
+      <% @score.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="score">
+    <%= f.label :score %><sup>*</sup><br>
+    <%= f.text_field :score %>
+  </div>
+
+  <div class="user_id">
+    <%= f.label :user_id %><sup>*</sup><br>
+    <%= f.text_field :user_id, :value => current_user.id %>
+  </div>
+
+
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

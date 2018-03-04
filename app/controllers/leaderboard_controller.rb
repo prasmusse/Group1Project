@@ -1,10 +1,10 @@
-class LeaderboardController < ApplicationController 
+class LeaderboardController < ApplicationController
  before_action :get_users
 
  def index
- 	@scores = User.all
+ 	
 
-  @scores2 = User.joins(:scores).where("users.id = scores.user_id").select('users.name as name', 'scores.score as score', 'users.image as image', 'users.email as email')
+  @scores = User.joins(:scores).where("users.id = scores.user_id").select('users.name as name', 'scores.score as score', 'users.image as image', 'users.email as email')
 
 
   end

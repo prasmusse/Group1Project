@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :scores
+
+
+
+  post '/new', controller: 'scores', action: 'new', as: 'new'
+
   get '/game', controller: 'game', action: 'index', as: 'game'
 
   get '/leaderboard', controller: 'leaderboard', action: 'index', as: 'leaderboard'
