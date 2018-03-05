@@ -1,5 +1,6 @@
-class LeaderboardController < ApplicationController 
- before_action :get_users
+class LeaderboardController < ApplicationController
+  before_action :notAuthorized
+  before_action :get_users
 
  def index
  	@scores = User.all
