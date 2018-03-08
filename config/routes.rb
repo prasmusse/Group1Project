@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
 
 
-  post '/new', controller: 'scores', action: 'new', as: 'new'
+  post '/create', controller: 'scores', action: 'create', as: 'create'
 
   get '/game', controller: 'game', action: 'index', as: 'game'
 

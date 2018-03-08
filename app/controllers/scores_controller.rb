@@ -1,5 +1,5 @@
 class ScoresController < ApplicationController
-  before_action :set_score, only: [:show, :edit, :update, :destroy]
+
 
   # GET /scores
   # GET /scores.json
@@ -18,23 +18,22 @@ class ScoresController < ApplicationController
   end
 
   # GET /scores/1/edit
-  def edit
-  end
+
 
   # POST /scores
   # POST /scores.json
   def create
-    @score = Score.new(score_params)
+    @score = Score.new(params[:scores])
 
     respond_to do |format|
       if @score.save
-        format.html { redirect_to @score, notice: 'Score was successfully created.' }
+
         format.json { render :show, status: :created, location: @score }
-        format.js
+
       else
-        format.html { render :new }
+
         format.json { render json: @score.errors, status: :unprocessable_entity }
-        format.js
+
       end
     end
   end
@@ -65,9 +64,9 @@ class ScoresController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_score
-      @score = Score.find(params[:id])
-    end
+  def setup_score
+    @score = Score.new(params)
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def score_params

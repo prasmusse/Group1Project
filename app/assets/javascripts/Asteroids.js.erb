@@ -84,9 +84,9 @@
         emitter.width = game.world.width;
         emitter.makeParticles('star');
         emitter.minParticleScale = 0.1;
-	    emitter.maxParticleScale = 0.2;
-	    emitter.setYSpeed(500, 600);
-	    emitter.setXSpeed(-5, 5);
+	      emitter.maxParticleScale = 0.2;
+	      emitter.setYSpeed(500, 600);
+	      emitter.setXSpeed(-5, 5);
         emitter.minRotation = 0;
         emitter.maxRotation = 0
         emitter.start(false, 1600, 5, 0);
@@ -375,10 +375,14 @@
     }
 
     function postScoreToLeaderboard() {
+      array = [score, user_id];
+      console.log(array);
       $.ajax({
         type: "POST",
         url : "/new",
-        data : {"score": score}
+        dataType: "json",
+        data : {"scores": JSON.stringify(array)}
+
       })
     }
 
