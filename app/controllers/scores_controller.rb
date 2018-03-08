@@ -23,7 +23,8 @@ class ScoresController < ApplicationController
   # POST /scores
   # POST /scores.json
   def create
-    @score = Score.new(params[:scores])
+
+    @score = Score.new(score_params[:returnedData])
 
     respond_to do |format|
       if @score.save
@@ -65,11 +66,17 @@ class ScoresController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
   def setup_score
-    @score = Score.new(params)
+    @score = Score.includes(:user).find(params[:id])
   end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def score_params
-      params.require(:score).permit(:score, :user_id)
+      params.permit(:score, :user_id)
     end
+
+    def get_score_data
+      @scores_data = params[:scores_data]
+
+
+  end
 end

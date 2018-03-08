@@ -375,15 +375,22 @@
     }
 
     function postScoreToLeaderboard() {
+      self = this
       array = [score, user_id];
-      console.log(array);
-      $.ajax({
-        type: "POST",
-        url : "/new",
-        dataType: "json",
-        data : {"scores": JSON.stringify(array)}
+      //console.log(array);
 
-      })
+      $.post('/create', { score : self.score, user_id : self.user_id},
+          function(returnedData){
+            console.log(returnedData);
+          }, 'json');
+
+      /*$.ajax({
+        type: 'post',
+        url : '/create',
+        contentType: 'json',
+        data : {score: JSON.stringify(array)}
+
+      })*/
     }
 
 })(jQuery);
