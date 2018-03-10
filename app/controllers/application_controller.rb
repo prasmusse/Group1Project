@@ -23,7 +23,8 @@ end
   end
 
   def admin_user
-   current_user.email == 'dkurschner87@gmail.com'
+    current_user.email == 'dkurschner87@gmail.com'
+    current_user.email == 'sargeantm0285@gmail.com'
   end
   
   def get_leaderboard
