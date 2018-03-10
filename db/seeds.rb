@@ -8,7 +8,7 @@
 
 10.times do
 	Score.create([{
-		score: 999999999999999,
+		score: Faker::Number.number(7),
 		user_id: Faker::Number.digit
 	
 		}])
