@@ -24,7 +24,7 @@ class ScoresController < ApplicationController
   # POST /scores
   # POST /scores.json
   def create
-    @score = Score.new(params[:parameter])
+    @score = Score.create!(params[:get_params])
 
     respond_to do |format|
       if @score.save
@@ -68,7 +68,7 @@ class ScoresController < ApplicationController
     end
 
     def get_params
-      parameter = params{:returnedData}
+      parameter = params{:returnedData.score}
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def score_params
