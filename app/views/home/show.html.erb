@@ -1,2 +1,24 @@
 
 <p>Landing Page Content will go here. You should only see this if you aren't logged in.</p>
+
+
+<table>
+    <tr id="tblHead">
+        <th>Image</th>
+        <th>Player Name</th>
+        <th>Score</th>
+        <% if admin_user %>
+        <th>Email</th>
+        <% end %>
+    </tr>
+    <% @scores2.each do |score| %>
+      <tr>
+        <td><%= image_tag(score.image, :size => "50x50") %></td>
+        <td><%= score.name %></td>
+        <td><%= score.score %></td>
+        <% if admin_user %>
+        <td><%= score.email %></td>
+        <% end %>
+      </tr>
+    <% end %>
+</table>
