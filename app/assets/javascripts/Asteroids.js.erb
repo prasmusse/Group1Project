@@ -19,9 +19,9 @@
     var bullets = 0;
     var livesText;
     var lives = 3;
-    var accuracy = 1;
-    var shotsFired = 1;
-    var shotsHit = 1;
+    var accuracy = 0;
+    var shotsFired = 0;
+    var shotsHit = 0;
     
     var laserShot;
     var asteriodBoom;
@@ -32,8 +32,13 @@
         game.load.image('star', '<%= image_path('spark.png') %>');
         game.load.image('spaceship', '<%= image_path('spaceship.png') %>');
         game.load.image('bullet', '<%= image_path('torpedo2.png') %>');
-        game.load.image('asteroid', '<%= image_path('asteroids_demo.png') %>');
+        
+        game.load.image('asteroid1', '<%= image_path('asteroids/Asteroid1.png') %>');
+        game.load.image('asteroid2', '<%= image_path('asteroids/Asteroid2.png') %>');
+        game.load.image('asteroid3', '<%= image_path('asteroids/Asteroid3.png') %>');
+        
         game.load.spritesheet('asteroidExplosion', '<%= image_path('explosion_sprite_sheet.png') %>', 128, 128);
+        game.load.spritesheet('shipExplosion', '<%= image_path('explosion_sprite_sheet1.png') %>', 128, 128);
         game.load.image('lives', '<%= image_path('spaceship.png') %>');
         
         game.load.audio('laserShot', '<%= asset_path('laserShot.wav') %>');
@@ -118,7 +123,7 @@
         asteroids = game.add.group();
         asteroids.enableBody = true;
         asteroids.physicsBodyType = Phaser.Physics.ARCADE;
-        asteroids.createMultiple(200, 'asteroid');
+        asteroids.createMultiple(200, 'asteroid2');
         asteroids.setAll('anchor.x', 0.5);
         asteroids.setAll('anchor.y', 0.5);
         asteroids.setAll('outOfBoundsKill', true);
@@ -142,6 +147,8 @@
     }
 
     function update() {
+        
+        
         
         // ***old and caused lag*** 
         //move background
@@ -214,7 +221,7 @@
         }
 
         function asteroidDrop() {
-
+            
             //  To avoid them being allowed to fall too frequently we set a time limit
             if (game.time.now > asteroidTime)
             {
@@ -240,11 +247,13 @@
                     } else if (game.time.now < 180000)  {
                         asteroidTime = (game.time.now + ((Math.random() * 1000) - 900));
                     } 
-                    asteroid.scale.setTo((Math.random() * 1.5) + .5);
-                    asteroid.body.angularAcceleration = (Math.random() * 50) + 5;
+                    asteroid.scale.setTo((Math.random() * 1.25) + .75);
+                    asteroid.body.angularAcceleration = (Math.random() * 50) + 5
                 }
             }
         }
+        
+    }
 
         function resetBullet (bullet) {
 
@@ -280,11 +289,23 @@
                     life3.kill();
                     asteroid.kill();
                     asteriodBoom.play();
+                   
+                    explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
+                    explode = explosions.animations.add('explode');
+                    explosions.animations.play('explode', 50);
+                    asteriodBoom.play();
+                    
                     break;
                 case 2:
                     life2.kill();
                     asteroid.kill();
                     asteriodBoom.play();
+                    
+                    explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
+                    explode = explosions.animations.add('explode');
+                    explosions.animations.play('explode', 50);
+                    asteriodBoom.play();
+                        
                     break;
                 case 1:
                     life1.kill();
@@ -297,7 +318,7 @@
                     // kill spaceship
                     spaceship.kill();
 
-                    explosions = game.add.sprite(spaceship.x - 40, spaceship.y - 30, 'asteroidExplosion');
+                    explosions = game.add.sprite(spaceship.x - 40, spaceship.y - 30, 'shipExplosion');
                     explode = explosions.animations.add('explode');
                     explosions.animations.play('explode', 10);
                     shipBoom.play();
@@ -327,8 +348,12 @@
         }
         
         function updateAccuracy() {
-            accuracy = (shotsHit / shotsFired) * 100;
-            accuracyText.setText("Accuracy: " + Math.round(accuracy) +"%");
+            if(shotsFired !== 0){
+                accuracy = (shotsHit / shotsFired) * 100;
+            } else{
+                accuracy = 100;
+            }
+                accuracyText.setText("Accuracy: " + Math.round(accuracy) +"%");
         }
 
         function updateScore() {
@@ -361,11 +386,10 @@
             updateBulletFire();
             
             //reset accuracy
-            shotsFired = 1;
-            shotsHit = 1;
-            accuracy = 1;
+            shotsFired = 0;
+            shotsHit = 0;
+            accuracy = 0;
             updateAccuracy();
-            
             
             //  A new level starts
             //  And brings the aliens back from the dead :)
@@ -375,5 +399,4 @@
             //runs create function to bring back all the objects
             create()
         }
-    }
 })(jQuery);
