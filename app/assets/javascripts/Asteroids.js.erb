@@ -198,205 +198,206 @@
         
         updateAccuracy();
 
-        function fireBullet () {
-
-            //  To avoid them being allowed to fire too fast we set a time limit
-            if (game.time.now > bulletTime)
-            {
-                //  Grab the first bullet we can from the pool
-                bullet = bullets.getFirstExists(false);
-
-                if (bullet)
-                {
-                    //  And fire it
-                    bullet.reset(spaceship.x + 30, spaceship.y + 8);
-                    bullet.body.velocity.y = -400;
-                    bulletTime = game.time.now + 200;
-                }
-                updateBulletFire();
-                laserShot.play();
-                updateAccuracy();
-            }
-
-        }
-
-        function asteroidDrop() {
-            
-            //  To avoid them being allowed to fall too frequently we set a time limit
-            if (game.time.now > asteroidTime)
-            {
-                //  Grab the first asteroid we can from the pool
-                asteroid = asteroids.getFirstExists(false);
-
-                if (asteroid)
-                {
-                    //  And drop it
-                    asteroid.reset(game.world.randomX, -30);
-                    game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath, (Math.random() * 300) + 50);
-                    // Progressive Difficulty
-                    if (game.time.now < 30000) {
-                        asteroidTime = (game.time.now + ((Math.random() * 1000) + 100));
-                    } else if (game.time.now < 60000) {
-                        asteroidTime = (game.time.now + ((Math.random() * 1000) - 100));
-                    } else if (game.time.now < 90000)  {
-                        asteroidTime = (game.time.now + ((Math.random() * 1000) - 300));
-                    } else if (game.time.now < 120000)  {
-                        asteroidTime = (game.time.now + ((Math.random() * 1000) - 500));
-                    } else if (game.time.now < 150000)  {
-                        asteroidTime = (game.time.now + ((Math.random() * 1000) - 700));
-                    } else if (game.time.now < 180000)  {
-                        asteroidTime = (game.time.now + ((Math.random() * 1000) - 900));
-                    } 
-                    asteroid.scale.setTo((Math.random() * 1.25) + .75);
-                    asteroid.body.angularAcceleration = (Math.random() * 50) + 5
-                }
-            }
-        }
+        
         
     }
+    
+    function fireBullet () {
 
-        function resetBullet (bullet) {
+        //  To avoid them being allowed to fire too fast we set a time limit
+        if (game.time.now > bulletTime)
+        {
+            //  Grab the first bullet we can from the pool
+            bullet = bullets.getFirstExists(false);
 
-            //  Called if the bullet goes out of the screen
-            bullet.kill();
-
-        }
-
-        function bulletHitAsteroid(asteroid, bullet) {
-
-            // kill asteroid
-            asteroid.kill();
-
-            // kill bullet
-            bullet.kill();
-
-            updateScore();
-            updateAccuracy();
-            updateBulletAdd();
-
-            // Explosions
-            explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
-            explode = explosions.animations.add('explode');
-            explosions.animations.play('explode', 50);
-            asteriodBoom.play();
-            
-             
-          }
-
-        function asteroidHitSpaceship(spaceship, asteroid) {
-            switch (lives) {
-                case 3:
-                    life3.kill();
-                    asteroid.kill();
-                    asteriodBoom.play();
-                   
-                    explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
-                    explode = explosions.animations.add('explode');
-                    explosions.animations.play('explode', 50);
-                    asteriodBoom.play();
-                    
-                    break;
-                case 2:
-                    life2.kill();
-                    asteroid.kill();
-                    asteriodBoom.play();
-                    
-                    explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
-                    explode = explosions.animations.add('explode');
-                    explosions.animations.play('explode', 50);
-                    asteriodBoom.play();
-                        
-                    break;
-                case 1:
-                    life1.kill();
-                    
-                    bulletCounter = 0;
-
-                    // kill asteroid
-                    asteroid.kill();
-
-                    // kill spaceship
-                    spaceship.kill();
-
-                    explosions = game.add.sprite(spaceship.x - 40, spaceship.y - 30, 'shipExplosion');
-                    explode = explosions.animations.add('explode');
-                    explosions.animations.play('explode', 10);
-                    shipBoom.play();
-                    gameOver();       
+            if (bullet)
+            {
+                //  And fire it
+                bullet.reset(spaceship.x + 30, spaceship.y + 8);
+                bullet.body.velocity.y = -400;
+                bulletTime = game.time.now + 200;
             }
-            
-            lives --;
-            
-        
-
-          }
-        function updateBulletFire() {
-            shotsFired++;
-            bulletCounter--;
-            bulletText.setText("Bullets: " + bulletCounter + "");
-        }
-        
-        function updateBulletAdd() {
-            if(asteroid.width > 40) {
-                bulletCounter += 3;
-            } else if (asteroid.width > 25) {
-                bulletCounter += 2;
-            } else {
-                bulletCounter++;
-            }
-            shotsHit++;
-        }
-        
-        function updateAccuracy() {
-            if(shotsFired !== 0){
-                accuracy = (shotsHit / shotsFired) * 100;
-            } else{
-                accuracy = 100;
-            }
-                accuracyText.setText("Accuracy: " + Math.round(accuracy) +"%");
-        }
-
-        function updateScore() {
-
-            score++;
-            scoreText.setText("Score: " + score + "");
-
-        }
-
-        function gameOver() {
-
-          gameOverText.text=" GAME OVER \n Click to restart";
-          gameOverText.visible = true;
-
-          //the "click to restart" handler
-          game.input.onTap.addOnce(restart,this);
-
-        }
-
-        function restart () {
-            // reset lives
-            lives = 3;
-            
-            //reset score back to zero
-            score = -1;
-            updateScore();
-            
-            //reset bullet counter back to 30
-            bulletCounter = 31;
             updateBulletFire();
-            
-            //reset accuracy
-            shotsFired = 0;
-            shotsHit = 0;
-            accuracy = 0;
+            laserShot.play();
             updateAccuracy();
-            
-            //  A new level starts
-            //  And brings the aliens back from the dead :)
-            asteroids.removeAll();
-            //hides the text
-            gameOverText.visible = false;
-            //runs create function to bring back all the objects
-            create()
         }
+
+    }
+
+    function asteroidDrop() {
+
+        //  To avoid them being allowed to fall too frequently we set a time limit
+        if (game.time.now > asteroidTime)
+        {
+            //  Grab the first asteroid we can from the pool
+            asteroid = asteroids.getFirstExists(false);
+
+            if (asteroid)
+            {
+                //  And drop it
+                asteroid.reset(game.world.randomX, -30);
+                game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath, (Math.random() * 300) + 50);
+                // Progressive Difficulty
+                if (game.time.now < 30000) {
+                    asteroidTime = (game.time.now + ((Math.random() * 1000) + 100));
+                } else if (game.time.now < 60000) {
+                    asteroidTime = (game.time.now + ((Math.random() * 1000) - 100));
+                } else if (game.time.now < 90000)  {
+                    asteroidTime = (game.time.now + ((Math.random() * 1000) - 300));
+                } else if (game.time.now < 120000)  {
+                    asteroidTime = (game.time.now + ((Math.random() * 1000) - 500));
+                } else if (game.time.now < 150000)  {
+                    asteroidTime = (game.time.now + ((Math.random() * 1000) - 700));
+                } else if (game.time.now < 180000)  {
+                    asteroidTime = (game.time.now + ((Math.random() * 1000) - 900));
+                } 
+                asteroid.scale.setTo((Math.random() * 1.25) + .75);
+                asteroid.body.angularAcceleration = (Math.random() * 50) + 5
+            }
+        }
+    }
+
+    function resetBullet (bullet) {
+
+        //  Called if the bullet goes out of the screen
+        bullet.kill();
+
+    }
+
+    function bulletHitAsteroid(asteroid, bullet) {
+
+        // kill asteroid
+        asteroid.kill();
+
+        // kill bullet
+        bullet.kill();
+
+        updateScore();
+        updateAccuracy();
+        updateBulletAdd();
+
+        // Explosions
+        explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
+        explode = explosions.animations.add('explode');
+        explosions.animations.play('explode', 50);
+        asteriodBoom.play();
+
+
+    }
+
+    function asteroidHitSpaceship(spaceship, asteroid) {
+        switch (lives) {
+            case 3:
+                life3.kill();
+                asteroid.kill();
+                asteriodBoom.play();
+
+                explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
+                explode = explosions.animations.add('explode');
+                explosions.animations.play('explode', 50);
+                asteriodBoom.play();
+                break;
+
+            case 2:
+                life2.kill();
+                asteroid.kill();
+                asteriodBoom.play();
+
+                explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
+                explode = explosions.animations.add('explode');
+                explosions.animations.play('explode', 50);
+                asteriodBoom.play();
+                break;
+
+            case 1:
+                life1.kill();
+
+                bulletCounter = 0;
+
+                // kill asteroid
+                asteroid.kill();
+
+                // kill spaceship
+                spaceship.kill();
+
+                explosions = game.add.sprite(spaceship.x - 40, spaceship.y - 30, 'shipExplosion');
+                explode = explosions.animations.add('explode');
+                explosions.animations.play('explode', 10);
+                shipBoom.play();
+                gameOver();       
+        }
+
+        lives --;
+
+    }
+
+    function updateBulletFire() {
+        shotsFired++;
+        bulletCounter--;
+        bulletText.setText("Bullets: " + bulletCounter + "");
+    }
+
+    function updateBulletAdd() {
+        if(asteroid.width > 40) {
+            bulletCounter += 3;
+        } else if (asteroid.width > 25) {
+            bulletCounter += 2;
+        } else {
+            bulletCounter++;
+        }
+        shotsHit++;
+    }
+
+    function updateAccuracy() {
+        if(shotsFired !== 0){
+            accuracy = (shotsHit / shotsFired) * 100;
+        } else{
+            accuracy = 100;
+        }
+            accuracyText.setText("Accuracy: " + Math.round(accuracy) +"%");
+    }
+
+    function updateScore() {
+
+        score++;
+        scoreText.setText("Score: " + score + "");
+
+    }
+
+    function gameOver() {
+
+      gameOverText.text=" GAME OVER \n Click to restart";
+      gameOverText.visible = true;
+
+      //the "click to restart" handler
+      game.input.onTap.addOnce(restart,this);
+
+    }
+
+    function restart () {
+        // reset lives
+        lives = 3;
+
+        //reset score back to zero
+        score = -1;
+        updateScore();
+
+        //reset bullet counter back to 30
+        bulletCounter = 31;
+        updateBulletFire();
+
+        //reset accuracy
+        shotsFired = 0;
+        shotsHit = 0;
+        accuracy = 0;
+        updateAccuracy();
+
+        //  A new level starts
+        //  And brings the aliens back from the dead :)
+        asteroids.removeAll();
+        //hides the text
+        gameOverText.visible = false;
+        //runs create function to bring back all the objects
+        create()
+    }
 })(jQuery);
