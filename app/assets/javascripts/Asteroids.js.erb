@@ -2,6 +2,7 @@
 (function($){
     var game = new Phaser.Game(960, 600, Phaser.CANVAS, 'gamecontainer', { preload: preload, create: create, update: update });
     var spaceship;
+    var shipShield;
     var asteroid;
     var asteroids;
     var asteroidTime = 0;
@@ -34,13 +35,11 @@
         game.load.image('star', '<%= image_path('spark.png') %>');
         game.load.image('spaceship', '<%= image_path('spaceship.png') %>');
         game.load.image('bullet', '<%= image_path('torpedo2.png') %>');
-        
-        game.load.image('asteroid1', '<%= image_path('asteroids/Asteroid1.png') %>');
         game.load.image('asteroid2', '<%= image_path('asteroids/Asteroid2.png') %>');
-        game.load.image('asteroid3', '<%= image_path('asteroids/Asteroid3.png') %>');
         
         game.load.spritesheet('asteroidExplosion', '<%= image_path('explosion_sprite_sheet.png') %>', 128, 128);
         game.load.spritesheet('shipExplosion', '<%= image_path('explosion_sprite_sheet1.png') %>', 128, 128);
+        game.load.spritesheet('shipShield', '<%= image_path('full_shield.png') %>', 128, 130);
         game.load.image('lives', '<%= image_path('spaceship.png') %>');
         
         game.load.audio('laserShot', '<%= asset_path('laserShot.wav') %>');
@@ -80,7 +79,6 @@
 
     function create() {
         
-        
         laserShot = game.add.audio('laserShot');
         asteriodBoom = game.add.audio('asteriodBoom');
         shipBoom = game.add.audio('shipBoom');
@@ -100,12 +98,16 @@
         //Starry background    ***old and caused lag*** 
         //starbackground = game.add.tileSprite(0, 0, 960, 600, 'starbackground');
         
-        
         // Add spaceship to the game
         spaceship = game.add.sprite(game.world.width/2, game.world.height - 100, 'spaceship');
         //  Enable physics on the spaceship
         game.physics.arcade.enable(spaceship);
 
+        //creates shields and adds them
+        shields = game.add.sprite(game.world.width/2 - 43, game.world.height - 130, 'shipShield');
+        shields.animations.add('shipShield');
+        shields.animations.play('shipShield', 30,true);
+        
         //  move the ship left and right
         spaceship.animations.add('left', [0, 1, 2, 3], 10, true);
         spaceship.animations.add('right', [5, 6, 7, 8], 10, true);
@@ -146,12 +148,14 @@
         // Setup spacebar as fire button
         fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
+        
     }
 
     function update() {
         // timer
         timer += 1;
         
+        shieldsHealth(lives);
         
         // ***old and caused lag*** 
         //move background
@@ -179,12 +183,16 @@
             //  Move to the left
             spaceship.body.velocity.x = -150;
             spaceship.animations.play('left');
+            
+            shields.x = spaceship.x - 50;
         } 
         else if (cursors.right.isDown)
         {
             //  Move to the right
             spaceship.body.velocity.x = 150;
             spaceship.animations.play('right');
+            
+            shields.x = spaceship.x - 40;
         }
         else
         {
@@ -336,6 +344,7 @@
 
                 // kill spaceship
                 spaceship.kill();
+                shields.kill();
 
                 explosions = game.add.sprite(spaceship.x - 40, spaceship.y - 30, 'shipExplosion');
                 explode = explosions.animations.add('explode');
@@ -348,6 +357,23 @@
 
     }
 
+   function shieldsHealth(lives){
+        switch (lives){
+            case 3:
+                shields.alpha = 1;
+                break;
+            case 2:
+                shields.alpha = .5;
+                if(timer % 7 == 0){
+                    shields.alpha = 1;
+                }
+                break;
+            case 1:
+                shields.alpha=0;
+                break; 
+        }
+    }
+    
     function updateBulletFire() {
         shotsFired++;
         bulletCounter--;
@@ -380,7 +406,7 @@
         scoreText.setText("Score: " + score + "");
 
     }
-
+    
     function gameOver() {
 
       gameOverText.text=" GAME OVER \n Click to restart";
