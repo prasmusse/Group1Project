@@ -23,6 +23,7 @@
     var accuracy = 0;
     var shotsFired = 0;
     var shotsHit = 0;
+    var timer = 0;
     
     var laserShot;
     var asteriodBoom;
@@ -148,7 +149,8 @@
     }
 
     function update() {
-        
+        // timer
+        timer += 1;
         
         
         // ***old and caused lag*** 
@@ -236,17 +238,17 @@
             if (asteroid)
             {
                 // Setup difficulty
-                if (game.time.now < 30000) {
+                if (timer < 1000) {
                     difficultyLevel = 1;
-                } else if (game.time.now < 60000) {
+                } else if (timer < 2000) {
                     difficultyLevel = 2;
-                } else if (game.time.now < 90000)  {
+                } else if (timer < 3000)  {
                     difficultyLevel = 3;
-                } else if (game.time.now < 120000)  {
+                } else if (timer < 4000)  {
                     difficultyLevel = 4;
-                } else if (game.time.now < 150000)  {
+                } else if (timer < 5000)  {
                     difficultyLevel = 5;
-                } else if (game.this.now < 180000)  {
+                } else if (timer < 6000)  {
                     difficultyLevel = 6;
                 } 
                 //  And drop it
@@ -390,10 +392,11 @@
     }
 
     function restart () {
-        /*// reset lives
+        // reset lives
         lives = 3;
         
-        
+        //timer reset
+        timer = 0;
 
         //reset score back to zero
         score = -1;
@@ -416,8 +419,8 @@
         gameOverText.visible = false;
         //runs create function to bring back all the objects
         create()
-        */
+        
         // reset game time
-        window.location.reload();
+        //window.location.reload();
     }
 })(jQuery);
