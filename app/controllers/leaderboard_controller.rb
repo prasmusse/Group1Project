@@ -3,7 +3,7 @@ class LeaderboardController < ApplicationController
   before_action :get_users
   before_action :get_leaderboard
   
- def index
+  def index
 
   end
 
