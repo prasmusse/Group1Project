@@ -1,11 +1,9 @@
 class LeaderboardController < ApplicationController
   before_action :notAuthorized
   before_action :get_users
-
+  before_action :get_leaderboard
+  
  def index
-
-  @scores2 = User.joins(:scores).where("users.id = scores.user_id").select('users.name as name', 'scores.score as score', 'users.image as image', 'users.email as email').order('score desc').limit(10)
-
 
   end
 

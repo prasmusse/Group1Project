@@ -23,6 +23,12 @@ end
   end
 
   def admin_user
-   current_user.email == 'dkurschner87@gmail.com'
+    current_user.email == 'dkurschner87@gmail.com'
+    current_user.email == 'sargeantm0285@gmail.com'
   end
+  
+  def get_leaderboard
+    @scores2 = User.joins(:scores).where("users.id = scores.user_id").select('users.name as name', 'scores.score as score', 'users.image as image', 'users.email as email').order('score desc').limit(10)
+  end
+  
 end
