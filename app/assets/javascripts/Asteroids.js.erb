@@ -25,7 +25,7 @@
     var shotsFired = 0;
     var shotsHit = 0;
     var timer = 0;
-
+    var cooldownTimer = 0;
     var laserShot;
     var asteriodBoom;
     var shipBoom;
@@ -166,6 +166,8 @@
     function update() {
         // timer
         timer += 1;
+        coolDown();
+
 
         shieldsHealth(lives);
 
@@ -323,8 +325,7 @@
     }
 
     function asteroidHitSpaceship(spaceship, asteroid) {
-        switch (lives) {
-            case 3:
+      if (cooldownTimer == 0 && lives == 3) {
                 life3.kill();
                 asteroid.kill();
                 asteriodBoom.play();
@@ -333,9 +334,9 @@
                 explode = explosions.animations.add('explode');
                 explosions.animations.play('explode', 50);
                 asteriodBoom.play();
-                break;
-
-            case 2:
+                cooldownTimer = 180;
+                lives --;
+    } else if (cooldownTimer == 0 && lives == 2) {
                 life2.kill();
                 asteroid.kill();
                 asteriodBoom.play();
@@ -344,9 +345,11 @@
                 explode = explosions.animations.add('explode');
                 explosions.animations.play('explode', 50);
                 asteriodBoom.play();
-                break;
+                cooldownTimer = 180;
+                lives --;
 
-            case 1:
+    } else if (cooldownTimer == 0 && lives == 1) {
+                lives --;
                 life1.kill();
 
                 bulletCounter = 0;
@@ -363,11 +366,12 @@
                 explosions.animations.play('explode', 10);
                 shipBoom.play();
                 gameOver();
-        }
 
-        lives --;
+              }
 
-    }
+
+      };
+
 
    function shieldsHealth(lives){
         switch (lives){
@@ -469,7 +473,15 @@
     function resume(){
       game.paused = false;
     }
+
     function clearText(){
       alertText.visible = false;
     }
+
+    function coolDown() {
+      if (cooldownTimer > 0) {
+        cooldownTimer -= 1;
+      };
+    }
+
 })(jQuery);
