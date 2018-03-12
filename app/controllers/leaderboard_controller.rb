@@ -4,7 +4,7 @@ class LeaderboardController < ApplicationController
   before_action :get_leaderboard
   
  def index
-
+ 	@i = 1
   end
 
 
