@@ -26,3 +26,14 @@ th, td{
 td:nth-child(even), th:nth-child(even){
     text-align:center;
 }
+
+#teaser {
+    display: inline-block;
+    margin-top: 0;
+    position: top;
+}
+
+#landing_table {
+    display: inline-block;
+    width: 500px;
+}

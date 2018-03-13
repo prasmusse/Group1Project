@@ -1,21 +1,28 @@
 
 <p>Landing Page Content will go here. You should only see this if you aren't logged in.</p>
 
-<%= video_tag("Group1Project3.mp4", size: "500x500", :autoplay => true) %>
 
-<table>
-    <tr id="tblHead">
-        <th>Image</th>
-        <th>Player Name</th>
-        <th>Score</th>
+<div id="teaser">
+<%= video_tag("Group1Project3.mp4", size: "500x500", :autoplay => true, :controls => true, :loop => true) %>
+</div>
 
-    </tr>
-    <% @scores2.each do |score| %>
-      <tr>
-        <td><%= image_tag(score.image, :size => "50x50") %></td>
-        <td><%= score.name %></td>
-        <td><%= score.score %></td>
+<div id="landing_table">
+    <table>
+        <tr id="tblHead">
+            <th>Rank</th>
+            <th>Player Name</th>
+            <th>Score</th>
 
-      </tr>
-    <% end %>
-</table>
+        </tr>
+        <% @scores2.each do |score| %>
+          <tr>
+            <td><%= @i %></td>
+            <td><%= score.name %></td>
+            <td><%= score.score %></td>
+
+          </tr>
+
+          <% @i = @i + 1 %>
+        <% end %>
+    </table>
+</div>

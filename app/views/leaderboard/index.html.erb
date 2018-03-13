@@ -2,6 +2,7 @@
 
 <table>
     <tr id="tblHead">
+        <th>Rank</th>
         <th>Image</th>
         <th>Player Name</th>
         <th>Score</th>
@@ -11,11 +12,14 @@
     </tr>
     <% @scores2.each do |score| %>
       <tr>
+        <td><%= @i %>
         <td><%= image_tag(score.image, :size => "50x50") %></td>
         <td><%= score.name %></td>
         <td><%= score.score %></td>
         <% if admin_user %>
         <td><%= score.email %></td>
+        <%  @i = @i + 1 %>
+
         <% end %>
       </tr>
     <% end %>
