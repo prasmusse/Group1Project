@@ -379,13 +379,11 @@
                 shields.alpha = 1;
                 break;
             case 2:
-                shields.alpha = .5;
-                if(timer % 7 == 0){
-                    shields.alpha = 1;
-                }
+                blinkShield(1, .5);
+
                 break;
             case 1:
-                shields.alpha=0;
+            blinkShield(.5, 0);
                 break;
         }
     }
@@ -483,5 +481,32 @@
         cooldownTimer -= 1;
       };
     }
+
+    function blinkShield(startingAlpha, endingAlpha) {
+
+      if (cooldownTimer >= 165)  {
+        shields.alpha = endingAlpha;
+      } else if (cooldownTimer >= 150){
+        shields.alpha = startingAlpha;
+      } else if (cooldownTimer >= 135){
+        shields.alpha = endingAlpha;
+      } else if (cooldownTimer >= 120){
+        shields.alpha = startingAlpha;
+      } else if (cooldownTimer >= 105){
+        shields.alpha = endingAlpha;
+      } else if (cooldownTimer >= 90){
+        shields.alpha = startingAlpha;
+      } else if (cooldownTimer >= 75){
+        shields.alpha = endingAlpha;
+      } else if (cooldownTimer >= 60){
+        shields.alpha = startingAlpha;
+      } else if (cooldownTimer >= 45){
+        shields.alpha = endingAlpha;
+      } else if (cooldownTimer >= 30){
+        shields.alpha = startingAlpha;
+      } else if (cooldownTimer >= 15){
+        shields.alpha = endingAlpha;
+    };
+  }
 
 })(jQuery);
