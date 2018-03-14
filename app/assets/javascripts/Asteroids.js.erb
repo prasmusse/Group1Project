@@ -278,7 +278,7 @@
                     difficultyLevel = 6;
                 }
                 //  And drop it
-                asteroid.reset(game.world.randomX, -30);
+                asteroid.reset(game.world.randomX, -50);
                 game.physics.arcade.moveToXY(asteroid, asteroidXPath, asteroidYPath, (Math.random() * 300) + 50);
                 // Progressive Difficulty
                 if (difficultyLevel == 1) {
@@ -294,7 +294,7 @@
                 } else if (game.time.now < 6)  {
                     asteroidTime = (game.time.now + ((Math.random() * 1000) - 900));
                 }
-                asteroid.scale.setTo((Math.random() * 1.25) + .75);
+                asteroid.scale.setTo((Math.random() * 2.25) + .75);
                 asteroid.body.angularAcceleration = (Math.random() * 50) + 5
             }
         }
