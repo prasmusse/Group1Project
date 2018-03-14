@@ -29,6 +29,7 @@
     var laserShot;
     var asteriodBoom;
     var shipBoom;
+    var shield;
 
     function preload() {
         //load all our sprite images
@@ -45,6 +46,8 @@
         game.load.audio('laserShot', '<%= asset_path('laserShot.wav') %>');
         game.load.audio('asteriodBoom', '<%= asset_path('darkExplosion.wav') %>');
         game.load.audio('shipBoom', '<%= asset_path('explosion.wav') %>');
+        game.load.audio('shield', '<%= asset_path('shieldsfailed.wav') %>');
+
 
         //add score keeper
         scoreText = game.add.text(game.world.centerX - 475, game.world.centerY - 300, "Score: 0", {
@@ -98,6 +101,7 @@
         laserShot = game.add.audio('laserShot');
         asteriodBoom = game.add.audio('asteriodBoom');
         shipBoom = game.add.audio('shipBoom');
+        shield = game.add.audio('shield');
 
         // Adds a starry particle background
         emitter = game.add.emitter(game.world.centerX, 0, 400);
@@ -198,7 +202,7 @@
             spaceship.body.velocity.x = -150;
             spaceship.animations.play('left');
 
-            shields.x = spaceship.x - 50;
+            shields.x = spaceship.x - 48;
         }
         else if (cursors.right.isDown)
         {
@@ -238,7 +242,7 @@
             if (bullet)
             {
                 //  And fire it
-                bullet.reset(spaceship.x + 30, spaceship.y + 8);
+                bullet.reset(spaceship.x + 20, spaceship.y + 8);
                 bullet.body.velocity.y = -400;
                 bulletTime = game.time.now + 200;
             }
@@ -328,7 +332,7 @@
       if (cooldownTimer == 0 && lives == 3) {
                 life3.kill();
                 asteroid.kill();
-                asteriodBoom.play();
+                
 
                 explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
                 explode = explosions.animations.add('explode');
@@ -339,7 +343,7 @@
     } else if (cooldownTimer == 0 && lives == 2) {
                 life2.kill();
                 asteroid.kill();
-                asteriodBoom.play();
+                shield.play();
 
                 explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
                 explode = explosions.animations.add('explode');
