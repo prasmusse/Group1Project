@@ -226,6 +226,8 @@
         }
 
         updateAccuracy();
+        
+
 
 
 
@@ -318,6 +320,8 @@
         updateScore();
         updateAccuracy();
         updateBulletAdd();
+        updateBulletFire();
+        bulletText.setText("Bullets: " + bulletCounter + "");
 
         // Explosions
         explosions = game.add.sprite(asteroid.x - (asteroid.width), asteroid.y - (asteroid.height), 'asteroidExplosion');
